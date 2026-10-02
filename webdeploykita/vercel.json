@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/",
+      "destination": "/index100.html"
+    },
+    {
       "source": "/apideploy",
       "destination": "/api/apideploy"
     }
