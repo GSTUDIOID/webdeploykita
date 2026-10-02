@@ -1,0 +1,2301 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Domains & Hosting — WebDeployKita</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet"
+>
+
+<style>
+
+:root {
+    color-scheme: dark;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(37,99,235,.08),
+            transparent 35%
+        ),
+        #06080d;
+
+    color: #e8edf7;
+
+    font-family:
+        Inter,
+        system-ui,
+        sans-serif;
+}
+
+.mono {
+    font-family:
+        "JetBrains Mono",
+        monospace;
+}
+
+.glass {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,24,38,.94),
+            rgba(8,11,18,.97)
+        );
+
+    border:
+        1px solid
+        rgba(148,163,184,.12);
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.28);
+}
+
+.nav-item {
+    transition:
+        .2s ease;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background:
+        rgba(59,130,246,.11);
+
+    border-color:
+        rgba(59,130,246,.20);
+
+    color:
+        #fff;
+}
+
+.domain-card {
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        background .2s ease;
+}
+
+.domain-card:hover {
+    transform:
+        translateY(-3px);
+
+    border-color:
+        rgba(59,130,246,.30);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(22,30,48,.98),
+            rgba(9,13,22,.98)
+        );
+}
+
+.input {
+    width: 100%;
+
+    background:
+        #080c14;
+
+    border:
+        1px solid
+        #1d2939;
+
+    border-radius:
+        12px;
+
+    padding:
+        13px 14px;
+
+    color:
+        #e8edf7;
+
+    outline:
+        none;
+
+    transition:
+        .2s;
+}
+
+.input:focus {
+    border-color:
+        #3b82f6;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(59,130,246,.10);
+}
+
+.btn {
+    border-radius:
+        11px;
+
+    padding:
+        10px 14px;
+
+    font-weight:
+        700;
+
+    transition:
+        .2s;
+}
+
+.btn:hover {
+    transform:
+        translateY(-1px);
+}
+
+.btn-primary {
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #7c3aed
+        );
+
+    color:
+        white;
+}
+
+.btn-secondary {
+    background:
+        rgba(255,255,255,.04);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    color:
+        #cbd5e1;
+}
+
+.status-dot {
+    width:
+        8px;
+
+    height:
+        8px;
+
+    border-radius:
+        999px;
+
+    display:
+        inline-block;
+}
+
+.modal {
+    background:
+        rgba(2,6,12,.82);
+
+    backdrop-filter:
+        blur(12px);
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="min-h-screen flex">
+
+
+<!-- SIDEBAR -->
+
+<aside
+    class="
+        hidden
+        lg:flex
+        w-64
+        shrink-0
+        border-r
+        border-white/5
+        bg-[#080b12]
+        p-5
+        flex-col
+    "
+>
+
+    <div
+        class="
+            flex
+            items-center
+            gap-3
+            mb-9
+        "
+    >
+
+        <div
+            class="
+                w-10
+                h-10
+                rounded-xl
+                bg-gradient-to-br
+                from-blue-500
+                to-violet-600
+                flex
+                items-center
+                justify-center
+                font-black
+            "
+        >
+            WD
+        </div>
+
+        <div>
+
+            <div
+                class="
+                    font-extrabold
+                    tracking-tight
+                "
+            >
+                WebDeployKita
+            </div>
+
+            <div
+                class="
+                    text-[11px]
+                    text-slate-500
+                    mono
+                "
+            >
+                DEPLOYMENT OS
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="
+            text-[10px]
+            uppercase
+            tracking-[.22em]
+            text-slate-600
+            mb-2
+        "
+    >
+        Workspace
+    </div>
+
+
+    <nav class="space-y-1">
+
+        <a
+            href="index100.html"
+            class="
+                nav-item
+                block
+                rounded-xl
+                border
+                border-transparent
+                px-3
+                py-3
+                text-slate-400
+            "
+        >
+            Control Center
+        </a>
+
+
+        <a
+            href="index200.html"
+            class="
+                nav-item
+                block
+                rounded-xl
+                border
+                border-transparent
+                px-3
+                py-3
+                text-slate-400
+            "
+        >
+            Deployment Center
+        </a>
+
+
+        <a
+            href="index300.html"
+            class="
+                nav-item
+                block
+                rounded-xl
+                border
+                border-transparent
+                px-3
+                py-3
+                text-slate-400
+            "
+        >
+            Project Manager
+        </a>
+
+
+        <a
+            href="index400.html"
+            class="
+                nav-item
+                active
+                block
+                rounded-xl
+                border
+                px-3
+                py-3
+            "
+        >
+            Domains & Hosting
+        </a>
+
+
+        <a
+            href="index500.html"
+            class="
+                nav-item
+                block
+                rounded-xl
+                border
+                border-transparent
+                px-3
+                py-3
+                text-slate-400
+            "
+        >
+            Settings
+        </a>
+
+    </nav>
+
+
+    <div
+        class="
+            mt-auto
+            glass
+            rounded-2xl
+            p-4
+        "
+    >
+
+        <div
+            class="
+                flex
+                items-center
+                gap-2
+                text-sm
+                font-semibold
+            "
+        >
+
+            <span
+                class="
+                    status-dot
+                    bg-emerald-400
+                "
+            ></span>
+
+            Hosting System
+
+        </div>
+
+
+        <div
+            class="
+                text-xs
+                text-slate-500
+                mt-2
+            "
+        >
+            Domain workspace ready.
+        </div>
+
+    </div>
+
+</aside>
+
+
+
+<!-- MAIN -->
+
+<main
+    class="
+        flex-1
+        min-w-0
+    "
+>
+
+
+<!-- HEADER -->
+
+<header
+    class="
+        h-20
+        border-b
+        border-white/5
+        px-5
+        lg:px-9
+        flex
+        items-center
+        justify-between
+        bg-[#070a10]/80
+        backdrop-blur-xl
+        sticky
+        top-0
+        z-10
+    "
+>
+
+    <div>
+
+        <div
+            class="
+                text-xs
+                text-slate-500
+                mono
+            "
+        >
+            WEBDEPLOYKITA / 400
+        </div>
+
+
+        <h1
+            class="
+                text-xl
+                font-extrabold
+                mt-1
+            "
+        >
+            Domains & Hosting
+        </h1>
+
+    </div>
+
+
+    <div
+        class="
+            flex
+            items-center
+            gap-3
+        "
+    >
+
+        <span
+            class="
+                hidden
+                sm:inline
+                text-xs
+                text-slate-500
+            "
+        >
+            HOSTING WORKSPACE
+        </span>
+
+
+        <span
+            class="
+                w-2
+                h-2
+                rounded-full
+                bg-blue-400
+                shadow-[0_0_14px_rgba(59,130,246,.8)]
+            "
+        ></span>
+
+    </div>
+
+</header>
+
+
+
+<!-- CONTENT -->
+
+<div
+    class="
+        p-5
+        lg:p-9
+        max-w-7xl
+        mx-auto
+    "
+>
+
+
+<!-- HERO -->
+
+<section class="mb-7">
+
+    <div
+        class="
+            flex
+            flex-col
+            lg:flex-row
+            lg:items-end
+            justify-between
+            gap-5
+        "
+    >
+
+        <div>
+
+            <div
+                class="
+                    text-blue-400
+                    text-sm
+                    font-bold
+                    mb-2
+                "
+            >
+                DOMAINS & HOSTING
+            </div>
+
+
+            <h2
+                class="
+                    text-3xl
+                    lg:text-4xl
+                    font-black
+                    tracking-tight
+                "
+            >
+                Kelola domain,
+                <span
+                    class="
+                        text-transparent
+                        bg-clip-text
+                        bg-gradient-to-r
+                        from-blue-400
+                        to-violet-400
+                    "
+                >
+                    satu tempat.
+                </span>
+            </h2>
+
+
+            <p
+                class="
+                    text-slate-500
+                    mt-2
+                    max-w-2xl
+                "
+            >
+                Pantau domain, project, hosting provider,
+                SSL, dan status konfigurasi dari satu workspace.
+            </p>
+
+        </div>
+
+
+        <button
+            id="addDomainBtn"
+            class="
+                btn
+                btn-primary
+                px-5
+                py-3
+                shrink-0
+            "
+        >
+            + Add Domain
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- STATS -->
+
+<section
+    class="
+        grid
+        grid-cols-2
+        xl:grid-cols-4
+        gap-4
+        mb-6
+    "
+>
+
+
+<div class="glass rounded-2xl p-5">
+
+    <div
+        class="
+            text-xs
+            text-slate-500
+        "
+    >
+        TOTAL DOMAINS
+    </div>
+
+    <div
+        id="totalDomains"
+        class="
+            text-3xl
+            font-black
+            mt-2
+        "
+    >
+        0
+    </div>
+
+    <div
+        class="
+            text-xs
+            text-blue-400
+            mt-2
+        "
+    >
+        Workspace domains
+    </div>
+
+</div>
+
+
+<div class="glass rounded-2xl p-5">
+
+    <div
+        class="
+            text-xs
+            text-slate-500
+        "
+    >
+        ACTIVE
+    </div>
+
+    <div
+        id="activeDomains"
+        class="
+            text-3xl
+            font-black
+            mt-2
+        "
+    >
+        0
+    </div>
+
+    <div
+        class="
+            text-xs
+            text-emerald-400
+            mt-2
+        "
+    >
+        Online configuration
+    </div>
+
+</div>
+
+
+<div class="glass rounded-2xl p-5">
+
+    <div
+        class="
+            text-xs
+            text-slate-500
+        "
+    >
+        SSL
+    </div>
+
+    <div
+        id="sslDomains"
+        class="
+            text-3xl
+            font-black
+            mt-2
+        "
+    >
+        0
+    </div>
+
+    <div
+        class="
+            text-xs
+            text-emerald-400
+            mt-2
+        "
+    >
+        Protected domains
+    </div>
+
+</div>
+
+
+<div class="glass rounded-2xl p-5">
+
+    <div
+        class="
+            text-xs
+            text-slate-500
+        "
+    >
+        DNS STATUS
+    </div>
+
+    <div
+        id="dnsStatus"
+        class="
+            text-xl
+            font-black
+            mt-3
+        "
+    >
+        —
+    </div>
+
+    <div
+        class="
+            text-xs
+            text-slate-500
+            mt-2
+        "
+    >
+        Workspace health
+    </div>
+
+</div>
+
+</section>
+
+
+
+<!-- TOOLBAR -->
+
+<section
+    class="
+        glass
+        rounded-2xl
+        p-4
+        mb-6
+    "
+>
+
+    <div
+        class="
+            flex
+            flex-col
+            md:flex-row
+            gap-3
+        "
+    >
+
+        <div class="flex-1">
+
+            <input
+                id="searchInput"
+                class="input"
+                placeholder="Search domain, project, provider..."
+            >
+
+        </div>
+
+
+        <select
+            id="statusFilter"
+            class="input md:w-48"
+        >
+
+            <option value="all">
+                All Status
+            </option>
+
+            <option value="active">
+                Active
+            </option>
+
+            <option value="pending">
+                Pending
+            </option>
+
+        </select>
+
+
+        <button
+            id="resetFilters"
+            class="
+                btn
+                btn-secondary
+            "
+        >
+            Reset
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- DOMAIN GRID -->
+
+<section>
+
+    <div
+        class="
+            flex
+            items-center
+            justify-between
+            mb-4
+        "
+    >
+
+        <div>
+
+            <h3
+                class="
+                    font-bold
+                    text-lg
+                "
+            >
+                Your Domains
+            </h3>
+
+            <p
+                class="
+                    text-xs
+                    text-slate-500
+                    mt-1
+                "
+            >
+                Domain yang tersimpan di hosting workspace.
+            </p>
+
+        </div>
+
+
+        <div
+            id="domainCount"
+            class="
+                text-xs
+                text-slate-600
+                mono
+            "
+        >
+            0 DOMAINS
+        </div>
+
+    </div>
+
+
+    <div
+        id="domainGrid"
+        class="
+            grid
+            md:grid-cols-2
+            xl:grid-cols-3
+            gap-5
+        "
+    ></div>
+
+</section>
+
+
+
+<!-- EMPTY -->
+
+<div
+    id="emptyState"
+    class="
+        hidden
+        glass
+        rounded-3xl
+        p-12
+        text-center
+        mt-5
+    "
+>
+
+    <div
+        class="
+            w-16
+            h-16
+            mx-auto
+            rounded-2xl
+            bg-blue-500/10
+            border
+            border-blue-500/10
+            flex
+            items-center
+            justify-center
+            text-2xl
+        "
+    >
+        ◉
+    </div>
+
+
+    <h3
+        class="
+            font-bold
+            text-lg
+            mt-5
+        "
+    >
+        Tidak ada domain
+    </h3>
+
+
+    <p
+        class="
+            text-sm
+            text-slate-500
+            mt-2
+        "
+    >
+        Tambahkan domain baru untuk mulai mengelola hosting.
+    </p>
+
+
+    <button
+        id="emptyAddDomain"
+        class="
+            btn
+            btn-primary
+            mt-5
+        "
+    >
+        + Add Domain
+    </button>
+
+</div>
+
+
+</div>
+
+</main>
+
+</div>
+
+
+
+<!-- ADD DOMAIN MODAL -->
+
+<div
+    id="domainModal"
+    class="
+        modal
+        fixed
+        inset-0
+        z-50
+        hidden
+        items-center
+        justify-center
+        p-5
+    "
+>
+
+    <div
+        class="
+            glass
+            rounded-3xl
+            w-full
+            max-w-xl
+            p-6
+            lg:p-7
+        "
+    >
+
+        <div
+            class="
+                flex
+                items-start
+                justify-between
+                mb-6
+            "
+        >
+
+            <div>
+
+                <div
+                    class="
+                        text-blue-400
+                        text-xs
+                        font-bold
+                        uppercase
+                        tracking-widest
+                    "
+                >
+                    Hosting Workspace
+                </div>
+
+                <h3
+                    class="
+                        text-xl
+                        font-black
+                        mt-1
+                    "
+                >
+                    Add Domain
+                </h3>
+
+            </div>
+
+
+            <button
+                id="closeModal"
+                class="
+                    text-slate-500
+                    hover:text-white
+                    text-xl
+                "
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form
+            id="domainForm"
+            class="space-y-5"
+        >
+
+            <div>
+
+                <label
+                    class="
+                        block
+                        text-xs
+                        text-slate-400
+                        font-semibold
+                        mb-2
+                    "
+                >
+                    Domain
+                </label>
+
+                <input
+                    id="domainName"
+                    class="input"
+                    required
+                    maxlength="120"
+                    placeholder="example.com"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label
+                    class="
+                        block
+                        text-xs
+                        text-slate-400
+                        font-semibold
+                        mb-2
+                    "
+                >
+                    Project
+                </label>
+
+                <select
+                    id="domainProject"
+                    class="input"
+                    required
+                ></select>
+
+            </div>
+
+
+            <div>
+
+                <label
+                    class="
+                        block
+                        text-xs
+                        text-slate-400
+                        font-semibold
+                        mb-2
+                    "
+                >
+                    Hosting Provider
+                </label>
+
+                <select
+                    id="domainProvider"
+                    class="input"
+                    required
+                >
+
+                    <option value="Vercel">
+                        Vercel
+                    </option>
+
+                    <option value="External DNS">
+                        External DNS
+                    </option>
+
+                    <option value="Custom Hosting">
+                        Custom Hosting
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div
+                class="
+                    flex
+                    justify-end
+                    gap-3
+                    pt-2
+                "
+            >
+
+                <button
+                    type="button"
+                    id="cancelModal"
+                    class="
+                        btn
+                        btn-secondary
+                    "
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="
+                        btn
+                        btn-primary
+                    "
+                >
+                    Add Domain
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+const STORAGE_KEY =
+    "webdeploykita.domains";
+
+const PROJECT_STORAGE_KEY =
+    "webdeploykita.projects";
+
+
+const defaultDomains = [
+
+    {
+        id: "domain-webtools-kita",
+        domain: "webtoolskita.com",
+        project: "WebToolsKita",
+        provider: "Vercel",
+        status: "active",
+        ssl: true,
+        dns: "Connected",
+        updated: "Today"
+    },
+
+    {
+        id: "domain-agency",
+        domain: "agency.webtoolskita.com",
+        project: "Agency Portal",
+        provider: "Vercel",
+        status: "active",
+        ssl: true,
+        dns: "Connected",
+        updated: "Today"
+    },
+
+    {
+        id: "domain-nexa",
+        domain: "nexa-landing.com",
+        project: "Nexa Landing",
+        provider: "External DNS",
+        status: "active",
+        ssl: true,
+        dns: "Connected",
+        updated: "Yesterday"
+    },
+
+    {
+        id: "domain-storefront",
+        domain: "storefront.example",
+        project: "Storefront",
+        provider: "Custom Hosting",
+        status: "pending",
+        ssl: false,
+        dns: "Pending",
+        updated: "2 days ago"
+    }
+
+];
+
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(/[&<>"']/g, char => ({
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#039;"
+        }[char]));
+
+}
+
+
+function getDomains() {
+
+    const saved =
+        localStorage.getItem(
+            STORAGE_KEY
+        );
+
+
+    if (!saved) {
+
+        const initial =
+            [...defaultDomains];
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(initial)
+        );
+
+        return initial;
+
+    }
+
+
+    try {
+
+        const parsed =
+            JSON.parse(saved);
+
+        if (!Array.isArray(parsed)) {
+            throw new Error(
+                "Invalid domain storage"
+            );
+        }
+
+        return parsed;
+
+    } catch {
+
+        const fallback =
+            [...defaultDomains];
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(fallback)
+        );
+
+        return fallback;
+
+    }
+
+}
+
+
+function saveDomains(domains) {
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(domains)
+    );
+
+}
+
+
+function getProjects() {
+
+    const saved =
+        localStorage.getItem(
+            PROJECT_STORAGE_KEY
+        );
+
+
+    if (!saved) {
+
+        return [
+
+            {
+                name: "WebToolsKita"
+            },
+
+            {
+                name: "Agency Portal"
+            },
+
+            {
+                name: "Nexa Landing"
+            },
+
+            {
+                name: "Storefront"
+            }
+
+        ];
+
+    }
+
+
+    try {
+
+        const projects =
+            JSON.parse(saved);
+
+
+        if (
+            !Array.isArray(projects)
+        ) {
+
+            throw new Error(
+                "Invalid projects"
+            );
+
+        }
+
+
+        return projects;
+
+    } catch {
+
+        return [];
+
+    }
+
+}
+
+
+function populateProjects() {
+
+    const select =
+        document.getElementById(
+            "domainProject"
+        );
+
+
+    const projects =
+        getProjects();
+
+
+    const names = [
+        ...new Set(
+            projects
+                .map(
+                    project =>
+                        project.name
+                )
+                .filter(Boolean)
+        )
+    ];
+
+
+    const existingDomains =
+        getDomains();
+
+
+    existingDomains.forEach(
+        domain => {
+
+            if (
+                domain.project &&
+                !names.includes(
+                    domain.project
+                )
+            ) {
+
+                names.push(
+                    domain.project
+                );
+
+            }
+
+        }
+    );
+
+
+    if (!names.length) {
+
+        select.innerHTML = `
+            <option value="">
+                No project available
+            </option>
+        `;
+
+        return;
+
+    }
+
+
+    select.innerHTML =
+        names
+            .map(
+                name =>
+                    `<option value="${escapeHtml(name)}">${escapeHtml(name)}</option>`
+            )
+            .join("");
+
+}
+
+
+function normalizeDomain(value) {
+
+    return String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(
+            /^https?:\/\//i,
+            ""
+        )
+        .replace(
+            /^www\./i,
+            ""
+        )
+        .replace(
+            /\/.*$/,
+            ""
+        );
+
+}
+
+
+function isValidDomain(domain) {
+
+    return /^(?=.{1,253}$)(?!-)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/i
+        .test(domain);
+
+}
+
+
+function renderDomains() {
+
+    const domains =
+        getDomains();
+
+
+    const search =
+        document
+            .getElementById(
+                "searchInput"
+            )
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    const filter =
+        document
+            .getElementById(
+                "statusFilter"
+            )
+            .value;
+
+
+    const filtered =
+        domains.filter(
+            domain => {
+
+                const text = (
+
+                    domain.domain +
+                    " " +
+                    domain.project +
+                    " " +
+                    domain.provider +
+                    " " +
+                    domain.dns
+
+                ).toLowerCase();
+
+
+                const matchesSearch =
+                    !search ||
+                    text.includes(search);
+
+
+                const matchesStatus =
+                    filter === "all" ||
+                    domain.status === filter;
+
+
+                return (
+                    matchesSearch &&
+                    matchesStatus
+                );
+
+            }
+        );
+
+
+    const grid =
+        document.getElementById(
+            "domainGrid"
+        );
+
+
+    grid.innerHTML = "";
+
+
+    filtered.forEach(
+        domain => {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "domain-card glass rounded-3xl p-5";
+
+
+            const active =
+                domain.status ===
+                "active";
+
+
+            const ssl =
+                Boolean(domain.ssl);
+
+
+            card.innerHTML = `
+
+                <div
+                    class="
+                        flex
+                        items-start
+                        justify-between
+                        gap-3
+                    "
+                >
+
+                    <div
+                        class="
+                            flex
+                            items-center
+                            gap-3
+                        "
+                    >
+
+                        <div
+                            class="
+                                w-11
+                                h-11
+                                rounded-xl
+                                bg-gradient-to-br
+                                from-blue-500/20
+                                to-violet-500/20
+                                border
+                                border-white/10
+                                flex
+                                items-center
+                                justify-center
+                                text-blue-300
+                                font-black
+                            "
+                        >
+                            @
+                        </div>
+
+
+                        <div>
+
+                            <div
+                                class="
+                                    font-bold
+                                    truncate
+                                    max-w-[190px]
+                                "
+                                title="${escapeHtml(domain.domain)}"
+                            >
+                                ${escapeHtml(domain.domain)}
+                            </div>
+
+                            <div
+                                class="
+                                    text-[11px]
+                                    text-slate-600
+                                    mono
+                                    mt-1
+                                "
+                            >
+                                ${escapeHtml(domain.project)}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <span
+                        class="
+                            text-[10px]
+                            font-bold
+                            uppercase
+                            px-2
+                            py-1
+                            rounded-full
+                            ${
+                                active
+                                ?
+                                "bg-emerald-400/10 text-emerald-400"
+                                :
+                                "bg-amber-400/10 text-amber-400"
+                            }
+                        "
+                    >
+                        ${
+                            active
+                            ?
+                            "ACTIVE"
+                            :
+                            "PENDING"
+                        }
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="
+                        mt-5
+                        rounded-xl
+                        bg-black/20
+                        border
+                        border-white/5
+                        p-3
+                    "
+                >
+
+                    <div
+                        class="
+                            text-[10px]
+                            uppercase
+                            tracking-wider
+                            text-slate-600
+                        "
+                    >
+                        Hosting Provider
+                    </div>
+
+                    <div
+                        class="
+                            text-sm
+                            text-slate-300
+                            mt-1
+                            font-semibold
+                        "
+                    >
+                        ${escapeHtml(domain.provider)}
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="
+                        grid
+                        grid-cols-2
+                        gap-3
+                        mt-4
+                    "
+                >
+
+                    <div
+                        class="
+                            rounded-xl
+                            bg-white/[.025]
+                            border
+                            border-white/5
+                            p-3
+                        "
+                    >
+
+                        <div
+                            class="
+                                text-[10px]
+                                text-slate-600
+                                uppercase
+                            "
+                        >
+                            SSL
+                        </div>
+
+                        <div
+                            class="
+                                text-xs
+                                font-bold
+                                mt-1
+                                ${
+                                    ssl
+                                    ?
+                                    "text-emerald-400"
+                                    :
+                                    "text-amber-400"
+                                }
+                            "
+                        >
+                            ${
+                                ssl
+                                ?
+                                "Protected"
+                                :
+                                "Not Active"
+                            }
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="
+                            rounded-xl
+                            bg-white/[.025]
+                            border
+                            border-white/5
+                            p-3
+                        "
+                    >
+
+                        <div
+                            class="
+                                text-[10px]
+                                text-slate-600
+                                uppercase
+                            "
+                        >
+                            DNS
+                        </div>
+
+                        <div
+                            class="
+                                text-xs
+                                font-bold
+                                mt-1
+                                ${
+                                    domain.dns === "Connected"
+                                    ?
+                                    "text-emerald-400"
+                                    :
+                                    "text-amber-400"
+                                }
+                            "
+                        >
+                            ${escapeHtml(domain.dns || "Unknown")}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="
+                        flex
+                        items-center
+                        justify-between
+                        mt-4
+                        text-xs
+                    "
+                >
+
+                    <div>
+
+                        <span
+                            class="
+                                text-slate-600
+                            "
+                        >
+                            UPDATED
+                        </span>
+
+                        <span
+                            class="
+                                text-slate-400
+                                ml-2
+                            "
+                        >
+                            ${escapeHtml(domain.updated || "—")}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="
+                        btn
+                        btn-secondary
+                        text-xs
+                        w-full
+                        mt-5
+                    "
+                    data-action="manage"
+                    data-id="${escapeHtml(domain.id)}"
+                >
+                    Manage
+                </button>
+
+            `;
+
+
+            grid.appendChild(
+                card
+            );
+
+        }
+    );
+
+
+    document.getElementById(
+        "domainCount"
+    ).textContent =
+        `${filtered.length} DOMAINS`;
+
+
+    document.getElementById(
+        "emptyState"
+    ).classList.toggle(
+        "hidden",
+        filtered.length !== 0
+    );
+
+
+    updateStats(domains);
+
+}
+
+
+function updateStats(domains) {
+
+    const active =
+        domains.filter(
+            domain =>
+                domain.status ===
+                "active"
+        ).length;
+
+
+    const ssl =
+        domains.filter(
+            domain =>
+                Boolean(domain.ssl)
+        ).length;
+
+
+    const connectedDns =
+        domains.filter(
+            domain =>
+                domain.dns ===
+                "Connected"
+        ).length;
+
+
+    document.getElementById(
+        "totalDomains"
+    ).textContent =
+        domains.length;
+
+
+    document.getElementById(
+        "activeDomains"
+    ).textContent =
+        active;
+
+
+    document.getElementById(
+        "sslDomains"
+    ).textContent =
+        ssl;
+
+
+    document.getElementById(
+        "dnsStatus"
+    ).textContent =
+        domains.length
+        ? `${connectedDns}/${domains.length}`
+        : "—";
+
+}
+
+
+function openModal() {
+
+    populateProjects();
+
+
+    const modal =
+        document.getElementById(
+            "domainModal"
+        );
+
+
+    modal.classList.remove(
+        "hidden"
+    );
+
+
+    modal.classList.add(
+        "flex"
+    );
+
+
+    setTimeout(
+        () =>
+            document
+                .getElementById(
+                    "domainName"
+                )
+                .focus(),
+        50
+    );
+
+}
+
+
+function closeModal() {
+
+    const modal =
+        document.getElementById(
+            "domainModal"
+        );
+
+
+    modal.classList.add(
+        "hidden"
+    );
+
+
+    modal.classList.remove(
+        "flex"
+    );
+
+}
+
+
+function manageDomain(id) {
+
+    const domain =
+        getDomains().find(
+            item =>
+                item.id === id
+        );
+
+
+    if (!domain) {
+        return;
+    }
+
+
+    alert(
+        `Domain: ${domain.domain}\nProject: ${domain.project}\nProvider: ${domain.provider}\nDNS: ${domain.dns}\nSSL: ${domain.ssl ? "Protected" : "Not Active"}`
+    );
+
+}
+
+
+document
+    .getElementById(
+        "addDomainBtn"
+    )
+    .addEventListener(
+        "click",
+        openModal
+    );
+
+
+document
+    .getElementById(
+        "emptyAddDomain"
+    )
+    .addEventListener(
+        "click",
+        openModal
+    );
+
+
+document
+    .getElementById(
+        "closeModal"
+    )
+    .addEventListener(
+        "click",
+        closeModal
+    );
+
+
+document
+    .getElementById(
+        "cancelModal"
+    )
+    .addEventListener(
+        "click",
+        closeModal
+    );
+
+
+document
+    .getElementById(
+        "domainModal"
+    )
+    .addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target.id ===
+                "domainModal"
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "searchInput"
+    )
+    .addEventListener(
+        "input",
+        renderDomains
+    );
+
+
+document
+    .getElementById(
+        "statusFilter"
+    )
+    .addEventListener(
+        "change",
+        renderDomains
+    );
+
+
+document
+    .getElementById(
+        "resetFilters"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            document
+                .getElementById(
+                    "searchInput"
+                )
+                .value = "";
+
+
+            document
+                .getElementById(
+                    "statusFilter"
+                )
+                .value = "all";
+
+
+            renderDomains();
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "domainGrid"
+    )
+    .addEventListener(
+        "click",
+        event => {
+
+            const button =
+                event.target.closest(
+                    "button[data-action]"
+                );
+
+
+            if (!button) {
+                return;
+            }
+
+
+            if (
+                button.dataset.action ===
+                "manage"
+            ) {
+
+                manageDomain(
+                    button.dataset.id
+                );
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "domainForm"
+    )
+    .addEventListener(
+        "submit",
+        event => {
+
+            event.preventDefault();
+
+
+            const domain =
+                normalizeDomain(
+                    document
+                        .getElementById(
+                            "domainName"
+                        )
+                        .value
+                );
+
+
+            const project =
+                document
+                    .getElementById(
+                        "domainProject"
+                    )
+                    .value
+                    .trim();
+
+
+            const provider =
+                document
+                    .getElementById(
+                        "domainProvider"
+                    )
+                    .value;
+
+
+            if (!isValidDomain(domain)) {
+
+                alert(
+                    "Masukkan domain yang valid, contoh: example.com"
+                );
+
+                return;
+
+            }
+
+
+            const domains =
+                getDomains();
+
+
+            if (
+                domains.some(
+                    item =>
+                        item.domain
+                            .toLowerCase() ===
+                        domain
+                )
+            ) {
+
+                alert(
+                    "Domain tersebut sudah ada di workspace."
+                );
+
+                return;
+
+            }
+
+
+            const isVercel =
+                provider ===
+                "Vercel";
+
+
+            const newDomain = {
+
+                id:
+                    "domain-" +
+                    Date.now(),
+
+                domain,
+
+                project,
+
+                provider,
+
+                status:
+                    isVercel
+                    ? "active"
+                    : "pending",
+
+                ssl:
+                    isVercel,
+
+                dns:
+                    isVercel
+                    ? "Connected"
+                    : "Pending",
+
+                updated:
+                    "Just now"
+
+            };
+
+
+            domains.unshift(
+                newDomain
+            );
+
+
+            saveDomains(
+                domains
+            );
+
+
+            event.target.reset();
+
+
+            closeModal();
+
+
+            renderDomains();
+
+        }
+    );
+
+
+populateProjects();
+
+renderDomains();
+
+</script>
+
+</body>
+</html>

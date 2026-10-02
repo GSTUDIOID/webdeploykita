@@ -1,0 +1,2194 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Project Manager — WebDeployKita</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet"
+>
+
+<style>
+
+:root {
+    color-scheme: dark;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(37,99,235,.08),
+            transparent 35%
+        ),
+        #06080d;
+
+    color: #e8edf7;
+
+    font-family:
+        Inter,
+        system-ui,
+        sans-serif;
+}
+
+.mono {
+    font-family:
+        "JetBrains Mono",
+        monospace;
+}
+
+.glass {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,24,38,.94),
+            rgba(8,11,18,.97)
+        );
+
+    border:
+        1px solid
+        rgba(148,163,184,.12);
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.28);
+}
+
+.nav-item {
+    transition:
+        .2s ease;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background:
+        rgba(59,130,246,.11);
+
+    border-color:
+        rgba(59,130,246,.20);
+
+    color:
+        #fff;
+}
+
+.project-card {
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        background .2s ease;
+}
+
+.project-card:hover {
+    transform:
+        translateY(-3px);
+
+    border-color:
+        rgba(59,130,246,.30);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(22,30,48,.98),
+            rgba(9,13,22,.98)
+        );
+}
+
+.input {
+    width: 100%;
+
+    background:
+        #080c14;
+
+    border:
+        1px solid
+        #1d2939;
+
+    border-radius:
+        12px;
+
+    padding:
+        13px 14px;
+
+    color:
+        #e8edf7;
+
+    outline:
+        none;
+
+    transition:
+        .2s;
+}
+
+.input:focus {
+    border-color:
+        #3b82f6;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(59,130,246,.10);
+}
+
+.btn {
+    border-radius:
+        11px;
+
+    padding:
+        10px 14px;
+
+    font-weight:
+        700;
+
+    transition:
+        .2s;
+}
+
+.btn:hover {
+    transform:
+        translateY(-1px);
+}
+
+.btn-primary {
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #7c3aed
+        );
+
+    color:
+        white;
+}
+
+.btn-secondary {
+    background:
+        rgba(255,255,255,.04);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    color:
+        #cbd5e1;
+}
+
+.status-dot {
+    width:
+        8px;
+
+    height:
+        8px;
+
+    border-radius:
+        999px;
+
+    display:
+        inline-block;
+}
+
+.modal {
+    background:
+        rgba(2,6,12,.82);
+
+    backdrop-filter:
+        blur(12px);
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="min-h-screen flex">
+
+
+<!-- SIDEBAR -->
+
+<aside
+    class="
+        hidden
+        lg:flex
+        w-64
+        shrink-0
+        border-r
+        border-white/5
+        bg-[#080b12]
+        p-5
+        flex-col
+    "
+>
+
+    <!-- BRAND -->
+
+    <div
+        class="
+            flex
+            items-center
+            gap-3
+            mb-9
+        "
+    >
+
+        <div
+            class="
+                w-10
+                h-10
+                rounded-xl
+                bg-gradient-to-br
+                from-blue-500
+                to-violet-600
+                flex
+                items-center
+                justify-center
+                font-black
+            "
+        >
+            WD
+        </div>
+
+        <div>
+
+            <div
+                class="
+                    font-extrabold
+                    tracking-tight
+                "
+            >
+                WebDeployKita
+            </div>
+
+            <div
+                class="
+                    text-[11px]
+                    text-slate-500
+                    mono
+                "
+            >
+                DEPLOYMENT OS
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- NAV -->
+
+    <div
+        class="
+            text-[10px]
+            uppercase
+            tracking-[.22em]
+            text-slate-600
+            mb-2
+        "
+    >
+        Workspace
+    </div>
+
+
+    <nav class="space-y-1">
+
+        <a
+            href="index100.html"
+            class="
+                nav-item
+                block
+                rounded-xl
+                border
+                border-transparent
+                px-3
+                py-3
+                text-slate-400
+            "
+        >
+            Control Center
+        </a>
+
+
+        <a
+            href="index200.html"
+            class="
+                nav-item
+                block
+                rounded-xl
+                border
+                border-transparent
+                px-3
+                py-3
+                text-slate-400
+            "
+        >
+            Deployment Center
+        </a>
+
+
+        <a
+            href="index300.html"
+            class="
+                nav-item
+                active
+                block
+                rounded-xl
+                border
+                px-3
+                py-3
+            "
+        >
+            Project Manager
+        </a>
+
+
+        <a
+            href="index400.html"
+            class="
+                nav-item
+                block
+                rounded-xl
+                border
+                border-transparent
+                px-3
+                py-3
+                text-slate-400
+            "
+        >
+            Domains & Hosting
+        </a>
+
+
+        <a
+            href="index500.html"
+            class="
+                nav-item
+                block
+                rounded-xl
+                border
+                border-transparent
+                px-3
+                py-3
+                text-slate-400
+            "
+        >
+            Settings
+        </a>
+
+    </nav>
+
+
+    <!-- SYSTEM -->
+
+    <div
+        class="
+            mt-auto
+            glass
+            rounded-2xl
+            p-4
+        "
+    >
+
+        <div
+            class="
+                flex
+                items-center
+                gap-2
+                text-sm
+                font-semibold
+            "
+        >
+
+            <span
+                class="
+                    status-dot
+                    bg-emerald-400
+                "
+            ></span>
+
+            Project System
+
+        </div>
+
+
+        <div
+            class="
+                text-xs
+                text-slate-500
+                mt-2
+            "
+        >
+            Local project workspace ready.
+        </div>
+
+    </div>
+
+</aside>
+
+
+
+<!-- MAIN -->
+
+<main
+    class="
+        flex-1
+        min-w-0
+    "
+>
+
+
+<!-- HEADER -->
+
+<header
+    class="
+        h-20
+        border-b
+        border-white/5
+        px-5
+        lg:px-9
+        flex
+        items-center
+        justify-between
+        bg-[#070a10]/80
+        backdrop-blur-xl
+        sticky
+        top-0
+        z-10
+    "
+>
+
+    <div>
+
+        <div
+            class="
+                text-xs
+                text-slate-500
+                mono
+            "
+        >
+            WEBDEPLOYKITA / 300
+        </div>
+
+
+        <h1
+            class="
+                text-xl
+                font-extrabold
+                mt-1
+            "
+        >
+            Project Manager
+        </h1>
+
+    </div>
+
+
+    <div
+        class="
+            flex
+            items-center
+            gap-3
+        "
+    >
+
+        <span
+            class="
+                hidden
+                sm:inline
+                text-xs
+                text-slate-500
+            "
+        >
+            PROJECT WORKSPACE
+        </span>
+
+
+        <span
+            class="
+                w-2
+                h-2
+                rounded-full
+                bg-blue-400
+                shadow-[0_0_14px_rgba(59,130,246,.8)]
+            "
+        ></span>
+
+    </div>
+
+</header>
+
+
+
+<!-- CONTENT -->
+
+<div
+    class="
+        p-5
+        lg:p-9
+        max-w-7xl
+        mx-auto
+    "
+>
+
+
+<!-- HERO -->
+
+<section
+    class="
+        mb-7
+    "
+>
+
+    <div
+        class="
+            flex
+            flex-col
+            lg:flex-row
+            lg:items-end
+            justify-between
+            gap-5
+        "
+    >
+
+        <div>
+
+            <div
+                class="
+                    text-blue-400
+                    text-sm
+                    font-bold
+                    mb-2
+                "
+            >
+                PROJECT MANAGEMENT
+            </div>
+
+
+            <h2
+                class="
+                    text-3xl
+                    lg:text-4xl
+                    font-black
+                    tracking-tight
+                "
+            >
+                Semua project,
+                <span
+                    class="
+                        text-transparent
+                        bg-clip-text
+                        bg-gradient-to-r
+                        from-blue-400
+                        to-violet-400
+                    "
+                >
+                    satu workspace.
+                </span>
+            </h2>
+
+
+            <p
+                class="
+                    text-slate-500
+                    mt-2
+                    max-w-2xl
+                "
+            >
+                Kelola project WebDeployKita,
+                repository, branch, status,
+                dan akses cepat menuju deployment.
+            </p>
+
+        </div>
+
+
+        <button
+            id="newProjectBtn"
+            class="
+                btn
+                btn-primary
+                px-5
+                py-3
+                shrink-0
+            "
+        >
+            + New Project
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- STATS -->
+
+<section
+    class="
+        grid
+        grid-cols-2
+        xl:grid-cols-4
+        gap-4
+        mb-6
+    "
+>
+
+
+<div class="glass rounded-2xl p-5">
+
+    <div
+        class="
+            text-xs
+            text-slate-500
+        "
+    >
+        TOTAL PROJECTS
+    </div>
+
+    <div
+        id="totalProjects"
+        class="
+            text-3xl
+            font-black
+            mt-2
+        "
+    >
+        0
+    </div>
+
+    <div
+        class="
+            text-xs
+            text-emerald-400
+            mt-2
+        "
+    >
+        Workspace projects
+    </div>
+
+</div>
+
+
+<div class="glass rounded-2xl p-5">
+
+    <div
+        class="
+            text-xs
+            text-slate-500
+        "
+    >
+        ACTIVE
+    </div>
+
+    <div
+        id="activeProjects"
+        class="
+            text-3xl
+            font-black
+            mt-2
+        "
+    >
+        0
+    </div>
+
+    <div
+        class="
+            text-xs
+            text-blue-400
+            mt-2
+        "
+    >
+        Ready to deploy
+    </div>
+
+</div>
+
+
+<div class="glass rounded-2xl p-5">
+
+    <div
+        class="
+            text-xs
+            text-slate-500
+        "
+    >
+        REPOSITORIES
+    </div>
+
+    <div
+        id="repoProjects"
+        class="
+            text-3xl
+            font-black
+            mt-2
+        "
+    >
+        0
+    </div>
+
+    <div
+        class="
+            text-xs
+            text-slate-500
+            mt-2
+        "
+    >
+        Connected GitHub
+    </div>
+
+</div>
+
+
+<div class="glass rounded-2xl p-5">
+
+    <div
+        class="
+            text-xs
+            text-slate-500
+        "
+    >
+        LAST UPDATED
+    </div>
+
+    <div
+        id="lastUpdated"
+        class="
+            text-xl
+            font-black
+            mt-3
+        "
+    >
+        —
+    </div>
+
+    <div
+        class="
+            text-xs
+            text-slate-500
+            mt-2
+        "
+    >
+        Project workspace
+    </div>
+
+</div>
+
+</section>
+
+
+
+<!-- TOOLBAR -->
+
+<section
+    class="
+        glass
+        rounded-2xl
+        p-4
+        mb-6
+    "
+>
+
+    <div
+        class="
+            flex
+            flex-col
+            md:flex-row
+            gap-3
+        "
+    >
+
+        <div
+            class="
+                flex-1
+                relative
+            "
+        >
+
+            <input
+                id="searchInput"
+                class="input"
+                placeholder="Search project, repository, branch..."
+            >
+
+        </div>
+
+
+        <select
+            id="statusFilter"
+            class="input md:w-48"
+        >
+
+            <option value="all">
+                All Status
+            </option>
+
+            <option value="active">
+                Active
+            </option>
+
+            <option value="draft">
+                Draft
+            </option>
+
+        </select>
+
+
+        <button
+            id="clearProjects"
+            class="
+                btn
+                btn-secondary
+            "
+        >
+            Reset
+        </button>
+
+    </div>
+
+</section>
+
+
+
+<!-- PROJECT GRID -->
+
+<section>
+
+    <div
+        class="
+            flex
+            items-center
+            justify-between
+            mb-4
+        "
+    >
+
+        <div>
+
+            <h3
+                class="
+                    font-bold
+                    text-lg
+                "
+            >
+                Your Projects
+            </h3>
+
+            <p
+                class="
+                    text-xs
+                    text-slate-500
+                    mt-1
+                "
+            >
+                Project yang tersimpan di workspace ini.
+            </p>
+
+        </div>
+
+
+        <div
+            id="projectCount"
+            class="
+                text-xs
+                text-slate-600
+                mono
+            "
+        >
+            0 PROJECTS
+        </div>
+
+    </div>
+
+
+    <div
+        id="projectGrid"
+        class="
+            grid
+            md:grid-cols-2
+            xl:grid-cols-3
+            gap-5
+        "
+    ></div>
+
+</section>
+
+
+
+<!-- EMPTY -->
+
+<div
+    id="emptyState"
+    class="
+        hidden
+        glass
+        rounded-3xl
+        p-12
+        text-center
+        mt-5
+    "
+>
+
+    <div
+        class="
+            w-16
+            h-16
+            mx-auto
+            rounded-2xl
+            bg-blue-500/10
+            border
+            border-blue-500/10
+            flex
+            items-center
+            justify-center
+            text-2xl
+        "
+    >
+        ◈
+    </div>
+
+
+    <h3
+        class="
+            font-bold
+            text-lg
+            mt-5
+        "
+    >
+        Tidak ada project
+    </h3>
+
+
+    <p
+        class="
+            text-sm
+            text-slate-500
+            mt-2
+        "
+    >
+        Buat project baru untuk mulai menggunakan workspace.
+    </p>
+
+
+    <button
+        id="emptyNewProject"
+        class="
+            btn
+            btn-primary
+            mt-5
+        "
+    >
+        + Create Project
+    </button>
+
+</div>
+
+
+</div>
+
+</main>
+
+</div>
+
+
+
+<!-- MODAL -->
+
+<div
+    id="projectModal"
+    class="
+        modal
+        fixed
+        inset-0
+        z-50
+        hidden
+        items-center
+        justify-center
+        p-5
+    "
+>
+
+    <div
+        class="
+            glass
+            rounded-3xl
+            w-full
+            max-w-xl
+            p-6
+            lg:p-7
+        "
+    >
+
+        <div
+            class="
+                flex
+                items-start
+                justify-between
+                mb-6
+            "
+        >
+
+            <div>
+
+                <div
+                    class="
+                        text-blue-400
+                        text-xs
+                        font-bold
+                        uppercase
+                        tracking-widest
+                    "
+                >
+                    New Workspace
+                </div>
+
+                <h3
+                    class="
+                        text-xl
+                        font-black
+                        mt-1
+                    "
+                >
+                    Create Project
+                </h3>
+
+            </div>
+
+
+            <button
+                id="closeModal"
+                class="
+                    text-slate-500
+                    hover:text-white
+                    text-xl
+                "
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form
+            id="projectForm"
+            class="space-y-5"
+        >
+
+            <div>
+
+                <label
+                    class="
+                        block
+                        text-xs
+                        text-slate-400
+                        font-semibold
+                        mb-2
+                    "
+                >
+                    Project Name
+                </label>
+
+                <input
+                    id="projectName"
+                    class="input"
+                    required
+                    maxlength="80"
+                    placeholder="my-awesome-project"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label
+                    class="
+                        block
+                        text-xs
+                        text-slate-400
+                        font-semibold
+                        mb-2
+                    "
+                >
+                    Repository URL
+                </label>
+
+                <input
+                    id="projectRepo"
+                    class="input"
+                    placeholder="https://github.com/user/project"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label
+                    class="
+                        block
+                        text-xs
+                        text-slate-400
+                        font-semibold
+                        mb-2
+                    "
+                >
+                    Default Branch
+                </label>
+
+                <input
+                    id="projectBranch"
+                    class="input"
+                    value="main"
+                    required
+                >
+
+            </div>
+
+
+            <div
+                class="
+                    flex
+                    justify-end
+                    gap-3
+                    pt-2
+                "
+            >
+
+                <button
+                    type="button"
+                    id="cancelModal"
+                    class="
+                        btn
+                        btn-secondary
+                    "
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="
+                        btn
+                        btn-primary
+                    "
+                >
+                    Create Project
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+const STORAGE_KEY =
+    "webdeploykita.projects";
+
+
+const SELECTED_PROJECT_KEY =
+    "webdeploykita.selectedProject";
+
+
+const defaultProjects = [
+
+    {
+        id: "webtools-kita",
+        name: "WebToolsKita",
+        repo: "https://github.com/webtoolskita/webtoolskita",
+        branch: "main",
+        status: "active",
+        updated: "Today"
+    },
+
+    {
+        id: "agency-portal",
+        name: "Agency Portal",
+        repo: "https://github.com/webtoolskita/agency-portal",
+        branch: "main",
+        status: "active",
+        updated: "Today"
+    },
+
+    {
+        id: "nexa-landing",
+        name: "Nexa Landing",
+        repo: "https://github.com/webtoolskita/nexa-landing",
+        branch: "develop",
+        status: "active",
+        updated: "Yesterday"
+    },
+
+    {
+        id: "storefront",
+        name: "Storefront",
+        repo: "https://github.com/webtoolskita/storefront",
+        branch: "main",
+        status: "draft",
+        updated: "2 days ago"
+    }
+
+];
+
+
+function getProjects() {
+
+    const saved =
+        localStorage.getItem(
+            STORAGE_KEY
+        );
+
+    if (!saved) {
+
+        const initial =
+            [...defaultProjects];
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(initial)
+        );
+
+        return initial;
+
+    }
+
+    try {
+
+        const parsed =
+            JSON.parse(saved);
+
+        if (!Array.isArray(parsed)) {
+            throw new Error(
+                "Invalid project storage"
+            );
+        }
+
+        return parsed;
+
+    } catch {
+
+        const fallback =
+            [...defaultProjects];
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(fallback)
+        );
+
+        return fallback;
+
+    }
+
+}
+
+
+function saveProjects(projects) {
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(projects)
+    );
+
+}
+
+
+function escapeHtml(value) {
+
+    return String(value ?? "")
+        .replace(/[&<>"']/g, char => ({
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#039;"
+        }[char]));
+
+}
+
+
+function getInitial(name) {
+
+    return String(name || "?")
+        .trim()
+        .charAt(0)
+        .toUpperCase();
+
+}
+
+
+function formatUpdated(date) {
+
+    if (!(date instanceof Date)) {
+        date = new Date(date);
+    }
+
+    if (Number.isNaN(date.getTime())) {
+        return "Just now";
+    }
+
+    return date.toLocaleString(
+        "id-ID",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+function isValidGitHubRepository(repo) {
+
+    if (!repo) {
+        return false;
+    }
+
+    const value =
+        repo
+            .trim()
+            .replace(/\.git$/i, "")
+            .replace(/\/+$/, "");
+
+    return /^https:\/\/github\.com\/[^\/\s]+\/[^\/\s]+$/i
+        .test(value);
+
+}
+
+
+function normalizeRepository(repo) {
+
+    return String(repo || "")
+        .trim()
+        .replace(/\.git$/i, "")
+        .replace(/\/+$/, "");
+
+}
+
+
+function createProjectId(name) {
+
+    const id =
+        String(name || "")
+            .toLowerCase()
+            .trim()
+            .replace(
+                /[^a-z0-9]+/g,
+                "-"
+            )
+            .replace(
+                /^-+|-+$/g,
+                ""
+            )
+            .slice(0, 60);
+
+    return id || `project-${Date.now()}`;
+
+}
+
+
+function renderProjects() {
+
+    const projects =
+        getProjects();
+
+    const search =
+        document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase()
+            .trim();
+
+    const filter =
+        document
+            .getElementById("statusFilter")
+            .value;
+
+
+    const filtered =
+        projects.filter(project => {
+
+            const text = (
+
+                project.name +
+                " " +
+                project.repo +
+                " " +
+                project.branch
+
+            ).toLowerCase();
+
+
+            const matchesSearch =
+                !search ||
+                text.includes(search);
+
+
+            const matchesStatus =
+                filter === "all" ||
+                project.status === filter;
+
+
+            return (
+                matchesSearch &&
+                matchesStatus
+            );
+
+        });
+
+
+    const grid =
+        document.getElementById(
+            "projectGrid"
+        );
+
+
+    grid.innerHTML = "";
+
+
+    filtered.forEach(project => {
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "project-card glass rounded-3xl p-5";
+
+
+        const statusActive =
+            project.status === "active";
+
+
+        card.innerHTML = `
+
+            <div class="flex items-start justify-between gap-3">
+
+                <div class="flex items-center gap-3">
+
+                    <div
+                        class="
+                            w-11
+                            h-11
+                            rounded-xl
+                            bg-gradient-to-br
+                            from-blue-500/20
+                            to-violet-500/20
+                            border
+                            border-white/10
+                            flex
+                            items-center
+                            justify-center
+                            font-black
+                            text-blue-300
+                        "
+                    >
+                        ${escapeHtml(
+                            getInitial(project.name)
+                        )}
+                    </div>
+
+                    <div>
+
+                        <div class="font-bold">
+                            ${escapeHtml(project.name)}
+                        </div>
+
+                        <div
+                            class="
+                                text-[11px]
+                                text-slate-600
+                                mono
+                                mt-1
+                            "
+                        >
+                            ${escapeHtml(project.id)}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <span
+                    class="
+                        text-[10px]
+                        font-bold
+                        uppercase
+                        px-2
+                        py-1
+                        rounded-full
+                        ${
+                            statusActive
+                            ?
+                            "bg-emerald-400/10 text-emerald-400"
+                            :
+                            "bg-amber-400/10 text-amber-400"
+                        }
+                    "
+                >
+                    ${
+                        statusActive
+                        ?
+                        "ACTIVE"
+                        :
+                        "DRAFT"
+                    }
+                </span>
+
+            </div>
+
+
+            <div
+                class="
+                    mt-5
+                    rounded-xl
+                    bg-black/20
+                    border
+                    border-white/5
+                    p-3
+                "
+            >
+
+                <div
+                    class="
+                        text-[10px]
+                        uppercase
+                        tracking-wider
+                        text-slate-600
+                    "
+                >
+                    Repository
+                </div>
+
+                <div
+                    class="
+                        text-xs
+                        text-slate-400
+                        mono
+                        mt-1
+                        truncate
+                    "
+                    title="${escapeHtml(project.repo)}"
+                >
+                    ${escapeHtml(project.repo || "No repository")}
+                </div>
+
+            </div>
+
+
+            <div
+                class="
+                    flex
+                    items-center
+                    justify-between
+                    mt-4
+                    text-xs
+                "
+            >
+
+                <div>
+
+                    <span class="text-slate-600">
+                        BRANCH
+                    </span>
+
+                    <span
+                        class="
+                            mono
+                            text-slate-400
+                            ml-2
+                        "
+                    >
+                        ${escapeHtml(project.branch || "main")}
+                    </span>
+
+                </div>
+
+
+                <div class="text-slate-600">
+                    ${escapeHtml(project.updated || "—")}
+                </div>
+
+            </div>
+
+
+            <div
+                class="
+                    grid
+                    grid-cols-2
+                    gap-2
+                    mt-5
+                "
+            >
+
+                <button
+                    class="
+                        btn
+                        btn-secondary
+                        text-xs
+                    "
+                    data-action="open"
+                    data-id="${escapeHtml(project.id)}"
+                >
+                    Open
+                </button>
+
+
+                <button
+                    class="
+                        btn
+                        btn-primary
+                        text-xs
+                    "
+                    data-action="deploy"
+                    data-id="${escapeHtml(project.id)}"
+                >
+                    Deploy
+                </button>
+
+            </div>
+
+        `;
+
+
+        grid.appendChild(card);
+
+    });
+
+
+    document.getElementById(
+        "projectCount"
+    ).textContent =
+        `${filtered.length} PROJECTS`;
+
+
+    document.getElementById(
+        "emptyState"
+    ).classList.toggle(
+        "hidden",
+        filtered.length !== 0
+    );
+
+
+    updateStats(projects);
+
+}
+
+
+function updateStats(projects) {
+
+    document.getElementById(
+        "totalProjects"
+    ).textContent =
+        projects.length;
+
+
+    document.getElementById(
+        "activeProjects"
+    ).textContent =
+        projects.filter(
+            p => p.status === "active"
+        ).length;
+
+
+    document.getElementById(
+        "repoProjects"
+    ).textContent =
+        projects.filter(
+            p => p.repo
+        ).length;
+
+
+    if (!projects.length) {
+
+        document.getElementById(
+            "lastUpdated"
+        ).textContent = "—";
+
+        return;
+
+    }
+
+
+    document.getElementById(
+        "lastUpdated"
+    ).textContent =
+        "LIVE";
+
+}
+
+
+function getProjectById(id) {
+
+    return getProjects().find(
+        project =>
+            project.id === id
+    );
+
+}
+
+
+function selectProject(project) {
+
+    localStorage.setItem(
+        SELECTED_PROJECT_KEY,
+        JSON.stringify(project)
+    );
+
+}
+
+
+function openProject(id) {
+
+    const project =
+        getProjectById(id);
+
+
+    if (!project) {
+        return;
+    }
+
+
+    selectProject(project);
+
+
+    const params =
+        new URLSearchParams({
+
+            project:
+                project.name,
+
+            repo:
+                project.repo || "",
+
+            branch:
+                project.branch || "main"
+
+        });
+
+
+    window.location.href =
+        "index200.html?" +
+        params.toString();
+
+}
+
+
+function deployProjectById(id) {
+
+    const project =
+        getProjectById(id);
+
+
+    if (!project) {
+        return;
+    }
+
+
+    if (!project.repo) {
+
+        alert(
+            `Project "${project.name}" belum memiliki Repository URL.`
+        );
+
+        return;
+
+    }
+
+
+    selectProject(project);
+
+
+    const params =
+        new URLSearchParams({
+
+            project:
+                project.name,
+
+            repo:
+                project.repo,
+
+            branch:
+                project.branch || "main"
+
+        });
+
+
+    window.location.href =
+        "index200.html?" +
+        params.toString();
+
+}
+
+
+function openModal() {
+
+    const modal =
+        document.getElementById(
+            "projectModal"
+        );
+
+
+    modal.classList.remove(
+        "hidden"
+    );
+
+    modal.classList.add(
+        "flex"
+    );
+
+
+    setTimeout(
+        () =>
+            document
+                .getElementById(
+                    "projectName"
+                )
+                .focus(),
+        50
+    );
+
+}
+
+
+function closeModal() {
+
+    const modal =
+        document.getElementById(
+            "projectModal"
+        );
+
+
+    modal.classList.add(
+        "hidden"
+    );
+
+    modal.classList.remove(
+        "flex"
+    );
+
+}
+
+
+document
+    .getElementById(
+        "newProjectBtn"
+    )
+    .addEventListener(
+        "click",
+        openModal
+    );
+
+
+document
+    .getElementById(
+        "emptyNewProject"
+    )
+    .addEventListener(
+        "click",
+        openModal
+    );
+
+
+document
+    .getElementById(
+        "closeModal"
+    )
+    .addEventListener(
+        "click",
+        closeModal
+    );
+
+
+document
+    .getElementById(
+        "cancelModal"
+    )
+    .addEventListener(
+        "click",
+        closeModal
+    );
+
+
+document
+    .getElementById(
+        "projectModal"
+    )
+    .addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target.id ===
+                "projectModal"
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "projectGrid"
+    )
+    .addEventListener(
+        "click",
+        event => {
+
+            const button =
+                event.target.closest(
+                    "button[data-action]"
+                );
+
+
+            if (!button) {
+                return;
+            }
+
+
+            const id =
+                button.dataset.id;
+
+
+            if (
+                button.dataset.action ===
+                "open"
+            ) {
+
+                openProject(id);
+
+            }
+
+
+            if (
+                button.dataset.action ===
+                "deploy"
+            ) {
+
+                deployProjectById(id);
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "searchInput"
+    )
+    .addEventListener(
+        "input",
+        renderProjects
+    );
+
+
+document
+    .getElementById(
+        "statusFilter"
+    )
+    .addEventListener(
+        "change",
+        renderProjects
+    );
+
+
+document
+    .getElementById(
+        "clearProjects"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            document
+                .getElementById(
+                    "searchInput"
+                )
+                .value = "";
+
+
+            document
+                .getElementById(
+                    "statusFilter"
+                )
+                .value = "all";
+
+
+            renderProjects();
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "projectForm"
+    )
+    .addEventListener(
+        "submit",
+        event => {
+
+            event.preventDefault();
+
+
+            const name =
+                document
+                    .getElementById(
+                        "projectName"
+                    )
+                    .value
+                    .trim();
+
+
+            const repo =
+                normalizeRepository(
+                    document
+                        .getElementById(
+                            "projectRepo"
+                        )
+                        .value
+                );
+
+
+            const branch =
+                document
+                    .getElementById(
+                        "projectBranch"
+                    )
+                    .value
+                    .trim() ||
+                "main";
+
+
+            if (!name) {
+
+                alert(
+                    "Project Name wajib diisi."
+                );
+
+                return;
+
+            }
+
+
+            if (
+                repo &&
+                !isValidGitHubRepository(repo)
+            ) {
+
+                alert(
+                    "Repository harus menggunakan format GitHub, contoh: https://github.com/user/project"
+                );
+
+                return;
+
+            }
+
+
+            const id =
+                createProjectId(name);
+
+
+            const projects =
+                getProjects();
+
+
+            if (
+                projects.some(
+                    p =>
+                        p.id === id
+                )
+            ) {
+
+                alert(
+                    "Project dengan nama tersebut sudah ada."
+                );
+
+                return;
+
+            }
+
+
+            const project = {
+
+                id,
+
+                name,
+
+                repo,
+
+                branch,
+
+                status:
+                    "active",
+
+                updated:
+                    "Just now"
+
+            };
+
+
+            projects.unshift(
+                project
+            );
+
+
+            saveProjects(
+                projects
+            );
+
+
+            selectProject(
+                project
+            );
+
+
+            event.target.reset();
+
+
+            document
+                .getElementById(
+                    "projectBranch"
+                )
+                .value =
+                "main";
+
+
+            closeModal();
+
+
+            renderProjects();
+
+        }
+    );
+
+
+renderProjects();
+
+</script>
+
+</body>
+</html>

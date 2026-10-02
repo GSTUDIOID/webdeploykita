@@ -1,0 +1,2277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Settings — WebDeployKita</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet"
+>
+
+<style>
+
+:root {
+    color-scheme: dark;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(37,99,235,.08),
+            transparent 35%
+        ),
+        #06080d;
+
+    color: #e8edf7;
+
+    font-family:
+        Inter,
+        system-ui,
+        sans-serif;
+}
+
+.mono {
+    font-family:
+        "JetBrains Mono",
+        monospace;
+}
+
+.glass {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,24,38,.94),
+            rgba(8,11,18,.97)
+        );
+
+    border:
+        1px solid
+        rgba(148,163,184,.12);
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.28);
+}
+
+.nav-item {
+    transition:
+        .2s ease;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background:
+        rgba(59,130,246,.11);
+
+    border-color:
+        rgba(59,130,246,.20);
+
+    color:
+        #fff;
+}
+
+.input {
+    width: 100%;
+
+    background:
+        #080c14;
+
+    border:
+        1px solid
+        #1d2939;
+
+    border-radius:
+        12px;
+
+    padding:
+        13px 14px;
+
+    color:
+        #e8edf7;
+
+    outline:
+        none;
+
+    transition:
+        .2s;
+}
+
+.input:focus {
+    border-color:
+        #3b82f6;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(59,130,246,.10);
+}
+
+.btn {
+    border-radius:
+        11px;
+
+    padding:
+        10px 14px;
+
+    font-weight:
+        700;
+
+    transition:
+        .2s;
+}
+
+.btn:hover {
+    transform:
+        translateY(-1px);
+}
+
+.btn-primary {
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #7c3aed
+        );
+
+    color:
+        white;
+}
+
+.btn-secondary {
+    background:
+        rgba(255,255,255,.04);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    color:
+        #cbd5e1;
+}
+
+.btn-danger {
+    background:
+        rgba(239,68,68,.08);
+
+    border:
+        1px solid
+        rgba(239,68,68,.18);
+
+    color:
+        #f87171;
+}
+
+.status-dot {
+    width:
+        8px;
+
+    height:
+        8px;
+
+    border-radius:
+        999px;
+
+    display:
+        inline-block;
+}
+
+.toggle {
+    position:
+        relative;
+
+    width:
+        46px;
+
+    height:
+        26px;
+
+    border-radius:
+        999px;
+
+    background:
+        #1e293b;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    cursor:
+        pointer;
+
+    transition:
+        .2s;
+}
+
+.toggle::after {
+    content:
+        "";
+
+    position:
+        absolute;
+
+    width:
+        18px;
+
+    height:
+        18px;
+
+    top:
+        3px;
+
+    left:
+        3px;
+
+    border-radius:
+        999px;
+
+    background:
+        #94a3b8;
+
+    transition:
+        .2s;
+}
+
+.toggle.on {
+    background:
+        #2563eb;
+
+    border-color:
+        rgba(59,130,246,.5);
+}
+
+.toggle.on::after {
+    left:
+        23px;
+
+    background:
+        white;
+}
+
+.toast {
+    transform:
+        translateY(20px);
+
+    opacity:
+        0;
+
+    pointer-events:
+        none;
+
+    transition:
+        .25s ease;
+}
+
+.toast.show {
+    transform:
+        translateY(0);
+
+    opacity:
+        1;
+}
+
+.section-title {
+    font-size:
+        11px;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        .18em;
+
+    color:
+        #64748b;
+
+    font-weight:
+        700;
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="min-h-screen flex">
+
+
+<!-- SIDEBAR -->
+
+<aside
+    class="
+        hidden
+        lg:flex
+        w-64
+        shrink-0
+        border-r
+        border-white/5
+        bg-[#080b12]
+        p-5
+        flex-col
+    "
+>
+
+    <div
+        class="
+            flex
+            items-center
+            gap-3
+            mb-9
+        "
+    >
+
+        <div
+            class="
+                w-10
+                h-10
+                rounded-xl
+                bg-gradient-to-br
+                from-blue-500
+                to-violet-600
+                flex
+                items-center
+                justify-center
+                font-black
+            "
+        >
+            WD
+        </div>
+
+        <div>
+
+            <div
+                class="
+                    font-extrabold
+                    tracking-tight
+                "
+            >
+                WebDeployKita
+            </div>
+
+            <div
+                class="
+                    text-[11px]
+                    text-slate-500
+                    mono
+                "
+            >
+                DEPLOYMENT OS
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="
+            text-[10px]
+            uppercase
+            tracking-[.22em]
+            text-slate-600
+            mb-2
+        "
+    >
+        Workspace
+    </div>
+
+
+    <nav class="space-y-1">
+
+        <a
+            href="index100.html"
+            class="
+                nav-item
+                block
+                rounded-xl
+                border
+                border-transparent
+                px-3
+                py-3
+                text-slate-400
+            "
+        >
+            Control Center
+        </a>
+
+
+        <a
+            href="index200.html"
+            class="
+                nav-item
+                block
+                rounded-xl
+                border
+                border-transparent
+                px-3
+                py-3
+                text-slate-400
+            "
+        >
+            Deployment Center
+        </a>
+
+
+        <a
+            href="index300.html"
+            class="
+                nav-item
+                block
+                rounded-xl
+                border
+                border-transparent
+                px-3
+                py-3
+                text-slate-400
+            "
+        >
+            Project Manager
+        </a>
+
+
+        <a
+            href="index400.html"
+            class="
+                nav-item
+                block
+                rounded-xl
+                border
+                border-transparent
+                px-3
+                py-3
+                text-slate-400
+            "
+        >
+            Domains & Hosting
+        </a>
+
+
+        <a
+            href="index500.html"
+            class="
+                nav-item
+                active
+                block
+                rounded-xl
+                border
+                px-3
+                py-3
+            "
+        >
+            Settings
+        </a>
+
+    </nav>
+
+
+    <div
+        class="
+            mt-auto
+            glass
+            rounded-2xl
+            p-4
+        "
+    >
+
+        <div
+            class="
+                flex
+                items-center
+                gap-2
+                text-sm
+                font-semibold
+            "
+        >
+
+            <span
+                id="systemDot"
+                class="
+                    status-dot
+                    bg-emerald-400
+                "
+            ></span>
+
+            System Settings
+
+        </div>
+
+
+        <div
+            id="systemText"
+            class="
+                text-xs
+                text-slate-500
+                mt-2
+            "
+        >
+            Configuration workspace ready.
+        </div>
+
+    </div>
+
+</aside>
+
+
+
+<!-- MAIN -->
+
+<main
+    class="
+        flex-1
+        min-w-0
+    "
+>
+
+
+<!-- HEADER -->
+
+<header
+    class="
+        h-20
+        border-b
+        border-white/5
+        px-5
+        lg:px-9
+        flex
+        items-center
+        justify-between
+        bg-[#070a10]/80
+        backdrop-blur-xl
+        sticky
+        top-0
+        z-10
+    "
+>
+
+    <div>
+
+        <div
+            class="
+                text-xs
+                text-slate-500
+                mono
+            "
+        >
+            WEBDEPLOYKITA / 500
+        </div>
+
+
+        <h1
+            class="
+                text-xl
+                font-extrabold
+                mt-1
+            "
+        >
+            Settings
+        </h1>
+
+    </div>
+
+
+    <div
+        class="
+            flex
+            items-center
+            gap-3
+        "
+    >
+
+        <span
+            class="
+                hidden
+                sm:inline
+                text-xs
+                text-slate-500
+            "
+        >
+            SYSTEM CONFIGURATION
+        </span>
+
+
+        <span
+            id="headerDot"
+            class="
+                w-2
+                h-2
+                rounded-full
+                bg-emerald-400
+                shadow-[0_0_14px_rgba(52,211,153,.8)]
+            "
+        ></span>
+
+    </div>
+
+</header>
+
+
+
+<!-- CONTENT -->
+
+<div
+    class="
+        p-5
+        lg:p-9
+        max-w-6xl
+        mx-auto
+    "
+>
+
+
+<!-- HERO -->
+
+<section class="mb-7">
+
+    <div
+        class="
+            text-blue-400
+            text-sm
+            font-bold
+            mb-2
+        "
+    >
+        SYSTEM SETTINGS
+    </div>
+
+
+    <h2
+        class="
+            text-3xl
+            lg:text-4xl
+            font-black
+            tracking-tight
+        "
+    >
+        Konfigurasi
+        <span
+            class="
+                text-transparent
+                bg-clip-text
+                bg-gradient-to-r
+                from-blue-400
+                to-violet-400
+            "
+        >
+            WebDeployKita.
+        </span>
+    </h2>
+
+
+    <p
+        class="
+            text-slate-500
+            mt-2
+            max-w-2xl
+        "
+    >
+        Kelola preferensi workspace, deployment,
+        hosting, dan konfigurasi sistem WebDeployKita.
+    </p>
+
+</section>
+
+
+
+<!-- ACCOUNT -->
+
+<section class="mb-6">
+
+    <div class="section-title mb-3">
+        Account
+    </div>
+
+
+    <div class="glass rounded-3xl p-6">
+
+        <div
+            class="
+                grid
+                md:grid-cols-2
+                gap-5
+            "
+        >
+
+            <div>
+
+                <label
+                    class="
+                        block
+                        text-xs
+                        text-slate-400
+                        font-semibold
+                        mb-2
+                    "
+                >
+                    Display Name
+                </label>
+
+                <input
+                    id="displayName"
+                    class="input"
+                    maxlength="80"
+                    placeholder="WebDeployKita Admin"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label
+                    class="
+                        block
+                        text-xs
+                        text-slate-400
+                        font-semibold
+                        mb-2
+                    "
+                >
+                    Email
+                </label>
+
+                <input
+                    id="email"
+                    class="input"
+                    type="email"
+                    maxlength="120"
+                    placeholder="admin@example.com"
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- DEPLOYMENT -->
+
+<section class="mb-6">
+
+    <div class="section-title mb-3">
+        Deployment
+    </div>
+
+
+    <div class="glass rounded-3xl overflow-hidden">
+
+        <div
+            class="
+                p-6
+                border-b
+                border-white/5
+            "
+        >
+
+            <div
+                class="
+                    flex
+                    flex-col
+                    md:flex-row
+                    md:items-center
+                    justify-between
+                    gap-4
+                "
+            >
+
+                <div>
+
+                    <div
+                        class="
+                            font-bold
+                        "
+                    >
+                        Deployment Provider
+                    </div>
+
+                    <div
+                        class="
+                            text-xs
+                            text-slate-500
+                            mt-1
+                        "
+                    >
+                        Provider yang digunakan oleh WebDeployKita.
+                    </div>
+
+                </div>
+
+
+                <select
+                    id="provider"
+                    class="
+                        input
+                        md:w-64
+                    "
+                >
+
+                    <option value="Vercel">
+                        Vercel
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="
+                p-6
+                border-b
+                border-white/5
+            "
+        >
+
+            <div
+                class="
+                    flex
+                    flex-col
+                    md:flex-row
+                    md:items-center
+                    justify-between
+                    gap-4
+                "
+            >
+
+                <div>
+
+                    <div class="font-bold">
+                        Default Branch
+                    </div>
+
+                    <div
+                        class="
+                            text-xs
+                            text-slate-500
+                            mt-1
+                        "
+                    >
+                        Branch default untuk project baru.
+                    </div>
+
+                </div>
+
+
+                <input
+                    id="defaultBranch"
+                    class="
+                        input
+                        md:w-64
+                        mono
+                    "
+                    value="main"
+                    maxlength="80"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="
+                p-6
+                border-b
+                border-white/5
+            "
+        >
+
+            <div
+                class="
+                    flex
+                    items-center
+                    justify-between
+                    gap-5
+                "
+            >
+
+                <div>
+
+                    <div class="font-bold">
+                        Auto Deploy
+                    </div>
+
+                    <div
+                        class="
+                            text-xs
+                            text-slate-500
+                            mt-1
+                        "
+                    >
+                        Simpan preferensi auto deployment di workspace.
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="autoDeployToggle"
+                    class="toggle"
+                    type="button"
+                    aria-label="Toggle Auto Deploy"
+                ></button>
+
+            </div>
+
+        </div>
+
+
+        <div class="p-6">
+
+            <div
+                class="
+                    flex
+                    items-center
+                    justify-between
+                    gap-5
+                "
+            >
+
+                <div>
+
+                    <div class="font-bold">
+                        Deployment Logs
+                    </div>
+
+                    <div
+                        class="
+                            text-xs
+                            text-slate-500
+                            mt-1
+                        "
+                    >
+                        Simpan riwayat aktivitas deployment di browser.
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="logsToggle"
+                    class="toggle"
+                    type="button"
+                    aria-label="Toggle Deployment Logs"
+                ></button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- DOMAINS -->
+
+<section class="mb-6">
+
+    <div class="section-title mb-3">
+        Domains & Hosting
+    </div>
+
+
+    <div class="glass rounded-3xl overflow-hidden">
+
+        <div
+            class="
+                p-6
+                border-b
+                border-white/5
+            "
+        >
+
+            <div
+                class="
+                    flex
+                    flex-col
+                    md:flex-row
+                    md:items-center
+                    justify-between
+                    gap-4
+                "
+            >
+
+                <div>
+
+                    <div class="font-bold">
+                        Hosting
+                    </div>
+
+                    <div
+                        class="
+                            text-xs
+                            text-slate-500
+                            mt-1
+                        "
+                    >
+                        Provider hosting workspace.
+                    </div>
+
+                </div>
+
+
+                <select
+                    id="hosting"
+                    class="
+                        input
+                        md:w-64
+                    "
+                >
+
+                    <option value="Vercel">
+                        Vercel
+                    </option>
+
+                    <option value="External DNS">
+                        External DNS
+                    </option>
+
+                    <option value="Custom Hosting">
+                        Custom Hosting
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="p-6">
+
+            <div
+                class="
+                    flex
+                    items-center
+                    justify-between
+                    gap-5
+                "
+            >
+
+                <div>
+
+                    <div class="font-bold">
+                        SSL Preference
+                    </div>
+
+                    <div
+                        class="
+                            text-xs
+                            text-slate-500
+                            mt-1
+                        "
+                    >
+                        Tandai SSL sebagai konfigurasi yang diharapkan.
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="sslToggle"
+                    class="toggle"
+                    type="button"
+                    aria-label="Toggle SSL Preference"
+                ></button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- SYSTEM -->
+
+<section class="mb-6">
+
+    <div class="section-title mb-3">
+        System
+    </div>
+
+
+    <div class="glass rounded-3xl p-6">
+
+        <div
+            class="
+                grid
+                sm:grid-cols-2
+                lg:grid-cols-4
+                gap-4
+            "
+        >
+
+            <div
+                class="
+                    rounded-2xl
+                    bg-black/20
+                    border
+                    border-white/5
+                    p-4
+                "
+            >
+
+                <div
+                    class="
+                        text-[10px]
+                        uppercase
+                        text-slate-600
+                    "
+                >
+                    Platform
+                </div>
+
+                <div
+                    class="
+                        font-bold
+                        mt-2
+                    "
+                >
+                    WebDeployKita
+                </div>
+
+            </div>
+
+
+            <div
+                class="
+                    rounded-2xl
+                    bg-black/20
+                    border
+                    border-white/5
+                    p-4
+                "
+            >
+
+                <div
+                    class="
+                        text-[10px]
+                        uppercase
+                        text-slate-600
+                    "
+                >
+                    Version
+                </div>
+
+                <div
+                    class="
+                        font-bold
+                        mt-2
+                        mono
+                    "
+                >
+                    1.0.0
+                </div>
+
+            </div>
+
+
+            <div
+                class="
+                    rounded-2xl
+                    bg-black/20
+                    border
+                    border-white/5
+                    p-4
+                "
+            >
+
+                <div
+                    class="
+                        text-[10px]
+                        uppercase
+                        text-slate-600
+                    "
+                >
+                    Environment
+                </div>
+
+                <div
+                    class="
+                        font-bold
+                        mt-2
+                        text-emerald-400
+                    "
+                >
+                    Production
+                </div>
+
+            </div>
+
+
+            <div
+                class="
+                    rounded-2xl
+                    bg-black/20
+                    border
+                    border-white/5
+                    p-4
+                "
+            >
+
+                <div
+                    class="
+                        text-[10px]
+                        uppercase
+                        text-slate-600
+                    "
+                >
+                    API
+                </div>
+
+                <div
+                    id="apiStatus"
+                    class="
+                        font-bold
+                        mt-2
+                        text-amber-400
+                    "
+                >
+                    Checking...
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            class="
+                mt-5
+                rounded-2xl
+                bg-black/20
+                border
+                border-white/5
+                p-4
+            "
+        >
+
+            <div
+                class="
+                    flex
+                    flex-col
+                    sm:flex-row
+                    sm:items-center
+                    justify-between
+                    gap-3
+                "
+            >
+
+                <div>
+
+                    <div
+                        class="
+                            text-[10px]
+                            uppercase
+                            text-slate-600
+                        "
+                    >
+                        API Endpoint
+                    </div>
+
+                    <div
+                        class="
+                            mono
+                            text-sm
+                            text-slate-300
+                            mt-1
+                        "
+                    >
+                        /apideploy
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="checkApiBtn"
+                    class="
+                        btn
+                        btn-secondary
+                        text-xs
+                    "
+                >
+                    Check API
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- SECURITY -->
+
+<section class="mb-6">
+
+    <div class="section-title mb-3">
+        Security
+    </div>
+
+
+    <div class="glass rounded-3xl overflow-hidden">
+
+        <div
+            class="
+                p-6
+                border-b
+                border-white/5
+            "
+        >
+
+            <div
+                class="
+                    flex
+                    flex-col
+                    sm:flex-row
+                    sm:items-center
+                    justify-between
+                    gap-4
+                "
+            >
+
+                <div>
+
+                    <div class="font-bold">
+                        Vercel Token
+                    </div>
+
+                    <div
+                        class="
+                            text-xs
+                            text-slate-500
+                            mt-1
+                        "
+                    >
+                        Token deployment tidak disimpan di browser.
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="
+                        px-3
+                        py-2
+                        rounded-xl
+                        bg-emerald-400/10
+                        text-emerald-400
+                        text-xs
+                        font-bold
+                        mono
+                    "
+                >
+                    SERVER PROTECTED
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="p-6">
+
+            <div
+                class="
+                    flex
+                    flex-col
+                    sm:flex-row
+                    sm:items-center
+                    justify-between
+                    gap-4
+                "
+            >
+
+                <div>
+
+                    <div class="font-bold">
+                        Session
+                    </div>
+
+                    <div
+                        class="
+                            text-xs
+                            text-slate-500
+                            mt-1
+                        "
+                    >
+                        Hapus preferensi workspace lokal dari sesi ini.
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="signOutBtn"
+                    class="
+                        btn
+                        btn-secondary
+                        text-xs
+                    "
+                >
+                    Sign Out
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- DANGER ZONE -->
+
+<section class="mb-8">
+
+    <div
+        class="
+            text-[11px]
+            uppercase
+            tracking-[.18em]
+            text-red-400
+            font-bold
+            mb-3
+        "
+    >
+        Danger Zone
+    </div>
+
+
+    <div
+        class="
+            rounded-3xl
+            border
+            border-red-500/15
+            bg-red-500/[.025]
+            p-6
+        "
+    >
+
+        <div
+            class="
+                flex
+                flex-col
+                lg:flex-row
+                lg:items-center
+                justify-between
+                gap-5
+            "
+        >
+
+            <div>
+
+                <div
+                    class="
+                        font-bold
+                        text-red-300
+                    "
+                >
+                    Reset Local Settings
+                </div>
+
+                <div
+                    class="
+                        text-xs
+                        text-slate-500
+                        mt-1
+                        max-w-2xl
+                    "
+                >
+                    Menghapus konfigurasi Settings lokal WebDeployKita
+                    dan mengembalikannya ke nilai default.
+                </div>
+
+            </div>
+
+
+            <button
+                id="resetSettingsBtn"
+                class="
+                    btn
+                    btn-danger
+                    shrink-0
+                "
+            >
+                Reset Settings
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- SAVE BAR -->
+
+<div
+    class="
+        sticky
+        bottom-5
+        z-20
+        glass
+        rounded-2xl
+        p-4
+        flex
+        flex-col
+        sm:flex-row
+        sm:items-center
+        justify-between
+        gap-4
+    "
+>
+
+    <div>
+
+        <div
+            class="
+                text-sm
+                font-bold
+            "
+        >
+            Workspace Settings
+        </div>
+
+        <div
+            class="
+                text-xs
+                text-slate-500
+                mt-1
+            "
+        >
+            Perubahan disimpan secara lokal di browser.
+        </div>
+
+    </div>
+
+
+    <button
+        id="saveBtn"
+        class="
+            btn
+            btn-primary
+            px-6
+        "
+    >
+        Save Changes
+    </button>
+
+</div>
+
+
+</div>
+
+</main>
+
+</div>
+
+
+
+<!-- TOAST -->
+
+<div
+    id="toast"
+    class="
+        toast
+        fixed
+        right-5
+        bottom-5
+        z-50
+        glass
+        rounded-2xl
+        px-5
+        py-4
+        min-w-[260px]
+    "
+>
+
+    <div
+        id="toastTitle"
+        class="
+            text-sm
+            font-bold
+        "
+    >
+        Settings Saved
+    </div>
+
+    <div
+        id="toastMessage"
+        class="
+            text-xs
+            text-slate-500
+            mt-1
+        "
+    >
+        Configuration updated.
+    </div>
+
+</div>
+
+
+
+<script>
+
+const STORAGE_KEY =
+    "webdeploykita.settings";
+
+
+const defaultSettings = {
+
+    displayName:
+        "WebDeployKita Admin",
+
+    email:
+        "admin@webdeploykita.local",
+
+    provider:
+        "Vercel",
+
+    defaultBranch:
+        "main",
+
+    autoDeploy:
+        true,
+
+    logs:
+        true,
+
+    hosting:
+        "Vercel",
+
+    ssl:
+        true
+
+};
+
+
+function getSettings() {
+
+    const saved =
+        localStorage.getItem(
+            STORAGE_KEY
+        );
+
+
+    if (!saved) {
+
+        const initial =
+            {
+                ...defaultSettings
+            };
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(initial)
+        );
+
+        return initial;
+
+    }
+
+
+    try {
+
+        const parsed =
+            JSON.parse(saved);
+
+
+        if (
+            !parsed ||
+            typeof parsed !== "object"
+        ) {
+
+            throw new Error(
+                "Invalid settings"
+            );
+
+        }
+
+
+        return {
+            ...defaultSettings,
+            ...parsed
+        };
+
+    } catch {
+
+        const fallback =
+            {
+                ...defaultSettings
+            };
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(fallback)
+        );
+
+        return fallback;
+
+    }
+
+}
+
+
+function saveSettings(
+    settings
+) {
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(settings)
+    );
+
+}
+
+
+function setToggle(
+    element,
+    enabled
+) {
+
+    element.classList.toggle(
+        "on",
+        Boolean(enabled)
+    );
+
+}
+
+
+function isToggleOn(
+    element
+) {
+
+    return element.classList.contains(
+        "on"
+    );
+
+}
+
+
+function loadSettings() {
+
+    const settings =
+        getSettings();
+
+
+    document.getElementById(
+        "displayName"
+    ).value =
+        settings.displayName;
+
+
+    document.getElementById(
+        "email"
+    ).value =
+        settings.email;
+
+
+    document.getElementById(
+        "provider"
+    ).value =
+        settings.provider;
+
+
+    document.getElementById(
+        "defaultBranch"
+    ).value =
+        settings.defaultBranch;
+
+
+    document.getElementById(
+        "hosting"
+    ).value =
+        settings.hosting;
+
+
+    setToggle(
+        document.getElementById(
+            "autoDeployToggle"
+        ),
+        settings.autoDeploy
+    );
+
+
+    setToggle(
+        document.getElementById(
+            "logsToggle"
+        ),
+        settings.logs
+    );
+
+
+    setToggle(
+        document.getElementById(
+            "sslToggle"
+        ),
+        settings.ssl
+    );
+
+}
+
+
+function collectSettings() {
+
+    return {
+
+        displayName:
+            document
+                .getElementById(
+                    "displayName"
+                )
+                .value
+                .trim() ||
+            defaultSettings.displayName,
+
+        email:
+            document
+                .getElementById(
+                    "email"
+                )
+                .value
+                .trim() ||
+            defaultSettings.email,
+
+        provider:
+            document
+                .getElementById(
+                    "provider"
+                )
+                .value,
+
+        defaultBranch:
+            document
+                .getElementById(
+                    "defaultBranch"
+                )
+                .value
+                .trim() ||
+            "main",
+
+        autoDeploy:
+            isToggleOn(
+                document.getElementById(
+                    "autoDeployToggle"
+                )
+            ),
+
+        logs:
+            isToggleOn(
+                document.getElementById(
+                    "logsToggle"
+                )
+            ),
+
+        hosting:
+            document
+                .getElementById(
+                    "hosting"
+                )
+                .value,
+
+        ssl:
+            isToggleOn(
+                document.getElementById(
+                    "sslToggle"
+                )
+            )
+
+    };
+
+}
+
+
+function showToast(
+    title,
+    message
+) {
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    document.getElementById(
+        "toastTitle"
+    ).textContent =
+        title;
+
+
+    document.getElementById(
+        "toastMessage"
+    ).textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        window.__webdeployToast
+    );
+
+
+    window.__webdeployToast =
+        setTimeout(
+            () => {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            3000
+        );
+
+}
+
+
+async function checkApi() {
+
+    const status =
+        document.getElementById(
+            "apiStatus"
+        );
+
+
+    const systemDot =
+        document.getElementById(
+            "systemDot"
+        );
+
+
+    const headerDot =
+        document.getElementById(
+            "headerDot"
+        );
+
+
+    status.textContent =
+        "Checking...";
+
+
+    status.className =
+        "font-bold mt-2 text-amber-400";
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/apideploy",
+                {
+                    method:
+                        "GET",
+                    headers: {
+                        "Accept":
+                            "application/json"
+                    },
+                    cache:
+                        "no-store"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            response.ok &&
+            data.ok === true
+        ) {
+
+            status.textContent =
+                data.configured
+                ?
+                "Connected"
+                :
+                "Online / Token Pending";
+
+
+            status.className =
+                data.configured
+                ?
+                "font-bold mt-2 text-emerald-400"
+                :
+                "font-bold mt-2 text-amber-400";
+
+
+            systemDot.className =
+                data.configured
+                ?
+                "status-dot bg-emerald-400"
+                :
+                "status-dot bg-amber-400";
+
+
+            headerDot.className =
+                data.configured
+                ?
+                "w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_14px_rgba(52,211,153,.8)]"
+                :
+                "w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_14px_rgba(251,191,36,.8)]";
+
+
+            document.getElementById(
+                "systemText"
+            ).textContent =
+                data.configured
+                ?
+                "API gateway online and configured."
+                :
+                "API gateway online, but Vercel token is not configured.";
+
+            return;
+
+        }
+
+
+        throw new Error(
+            data?.error ||
+            "API unavailable"
+        );
+
+
+    } catch (error) {
+
+        status.textContent =
+            "Offline";
+
+
+        status.className =
+            "font-bold mt-2 text-red-400";
+
+
+        systemDot.className =
+            "status-dot bg-red-400";
+
+
+        headerDot.className =
+            "w-2 h-2 rounded-full bg-red-400";
+
+
+        document.getElementById(
+            "systemText"
+        ).textContent =
+            "API gateway is currently unreachable.";
+
+    }
+
+}
+
+
+document
+    .getElementById(
+        "autoDeployToggle"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            this.classList.toggle(
+                "on"
+            );
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "logsToggle"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            this.classList.toggle(
+                "on"
+            );
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "sslToggle"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            this.classList.toggle(
+                "on"
+            );
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "saveBtn"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            const settings =
+                collectSettings();
+
+
+            saveSettings(
+                settings
+            );
+
+
+            showToast(
+                "Settings Saved",
+                "Konfigurasi WebDeployKita berhasil disimpan."
+            );
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "checkApiBtn"
+    )
+    .addEventListener(
+        "click",
+        async () => {
+
+            await checkApi();
+
+
+            showToast(
+                "API Check",
+                "Status API sudah diperbarui."
+            );
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "resetSettingsBtn"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            const confirmed =
+                confirm(
+                    "Reset semua pengaturan lokal WebDeployKita ke default?"
+                );
+
+
+            if (!confirmed) {
+                return;
+            }
+
+
+            localStorage.removeItem(
+                STORAGE_KEY
+            );
+
+
+            loadSettings();
+
+
+            showToast(
+                "Settings Reset",
+                "Pengaturan dikembalikan ke konfigurasi default."
+            );
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "signOutBtn"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            const confirmed =
+                confirm(
+                    "Hapus preferensi workspace lokal dari browser ini?"
+                );
+
+
+            if (!confirmed) {
+                return;
+            }
+
+
+            localStorage.removeItem(
+                STORAGE_KEY
+            );
+
+            localStorage.removeItem(
+                "webdeploykita.selectedProject"
+            );
+
+
+            loadSettings();
+
+
+            showToast(
+                "Session Cleared",
+                "Preferensi lokal workspace telah dibersihkan."
+            );
+
+        }
+    );
+
+
+loadSettings();
+
+checkApi();
+
+</script>
+
+</body>
+</html>

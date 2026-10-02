@@ -1,0 +1,1921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Control Center - WebDeployKita</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, .12), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(124, 58, 237, .10), transparent 30%),
+        #020617;
+      color: #e2e8f0;
+      font-family: Inter, sans-serif;
+    }
+
+    .glass {
+      background: rgba(15, 23, 42, .72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(148, 163, 184, .10);
+    }
+
+    .glass-soft {
+      background: rgba(15, 23, 42, .48);
+      border: 1px solid rgba(148, 163, 184, .08);
+    }
+
+    .mono {
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .sidebar {
+      background:
+        linear-gradient(
+          180deg,
+          rgba(2, 6, 23, .98),
+          rgba(3, 7, 18, .94)
+        );
+      border-right: 1px solid rgba(148, 163, 184, .08);
+    }
+
+    .nav-item {
+      transition: .2s ease;
+    }
+
+    .nav-item:hover {
+      background: rgba(30, 41, 59, .75);
+      transform: translateX(2px);
+    }
+
+    .nav-active {
+      background:
+        linear-gradient(
+          90deg,
+          rgba(37, 99, 235, .20),
+          rgba(30, 41, 59, .45)
+        );
+      border: 1px solid rgba(59, 130, 246, .20);
+      color: #60a5fa;
+    }
+
+    .action-card {
+      transition: .22s ease;
+    }
+
+    .action-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(59, 130, 246, .25);
+      background: rgba(15, 23, 42, .82);
+    }
+
+    .project-card {
+      transition: .2s ease;
+    }
+
+    .project-card:hover {
+      border-color: rgba(59, 130, 246, .20);
+      transform: translateY(-1px);
+    }
+
+    .mobile-nav {
+      display: none;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    .scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    .scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(100, 116, 139, .25);
+      border-radius: 999px;
+    }
+
+    @media (max-width: 900px) {
+      .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid rgba(148, 163, 184, .08);
+      }
+
+      .desktop-sidebar {
+        display: none;
+      }
+
+      .mobile-nav {
+        display: flex;
+      }
+
+      .main-content {
+        margin-left: 0 !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================================================
+       DESKTOP SIDEBAR
+  ========================================================== -->
+
+  <aside class="sidebar desktop-sidebar fixed left-0 top-0 z-40 h-screen w-64">
+
+    <div class="flex h-full flex-col">
+
+      <!-- LOGO -->
+
+      <div class="flex items-center gap-3 border-b border-slate-800/70 px-6 py-6">
+
+        <div
+          class="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-500/20 bg-blue-600/15"
+        >
+          <svg
+            class="h-5 w-5 text-blue-400"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M13 10V3L4 14h7v7l9-11h-7Z"
+            />
+          </svg>
+        </div>
+
+        <div>
+          <div class="font-bold tracking-tight text-white">
+            WebDeployKita
+          </div>
+
+          <div class="mono text-[10px] uppercase tracking-[.18em] text-slate-500">
+            Deployment Platform
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- NAVIGATION -->
+
+      <nav class="flex-1 space-y-1 px-3 py-5">
+
+        <a
+          href="index100.html"
+          class="nav-item nav-active flex items-center gap-3 rounded-xl px-4 py-3 text-sm"
+        >
+          <svg
+            class="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3 13h8V3H3v10Zm10 8h8V11h-8v10ZM3 21h8v-4H3v4Zm10-18v4h8V3h-8Z"
+            />
+          </svg>
+
+          Control Center
+        </a>
+
+
+        <a
+          href="index200.html"
+          class="nav-item flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-400"
+        >
+          <svg
+            class="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 16V4m0 0-4 4m4-4 4 4M5 12v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"
+            />
+          </svg>
+
+          Deployment Center
+        </a>
+
+
+        <a
+          href="index300.html"
+          class="nav-item flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-400"
+        >
+          <svg
+            class="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M4 7h16M4 12h16M4 17h16"
+            />
+          </svg>
+
+          Project Manager
+        </a>
+
+
+        <a
+          href="index400.html"
+          class="nav-item flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-400"
+        >
+          <svg
+            class="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3 10h18M5 6h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"
+            />
+          </svg>
+
+          Domains & Hosting
+        </a>
+
+
+        <a
+          href="index500.html"
+          class="nav-item flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-slate-400"
+        >
+          <svg
+            class="h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"
+            />
+
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.9 1.9-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.04 1.56V22h-2.68v-.09a1.7 1.7 0 0 0-1.04-1.56 1.7 1.7 0 0 0-1.88.34l-.06.06-1.9-1.9.06-.06A1.7 1.7 0 0 0 7.4 15a1.7 1.7 0 0 0-1.56-1.04H5.75v-2.68h.09A1.7 1.7 0 0 0 7.4 10a1.7 1.7 0 0 0-.34-1.88L7 8.06l1.9-1.9.06.06a1.7 1.7 0 0 0 1.88.34 1.7 1.7 0 0 0 1.04-1.56V4h2.68v.09a1.7 1.7 0 0 0 1.04 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.06 1.9 1.9-.06.06A1.7 1.7 0 0 0 19.4 10a1.7 1.7 0 0 0 1.56 1.04h.09v2.68h-.09A1.7 1.7 0 0 0 19.4 15Z"
+            />
+          </svg>
+
+          Settings
+        </a>
+
+      </nav>
+
+
+      <!-- API STATUS -->
+
+      <div class="border-t border-slate-800/70 p-4">
+
+        <div class="glass-soft rounded-xl p-3">
+
+          <div class="flex items-center justify-between">
+
+            <span class="mono text-[10px] uppercase tracking-wider text-slate-500">
+              API Gateway
+            </span>
+
+            <span
+              id="sidebarStatusDot"
+              class="status-dot bg-slate-500"
+            ></span>
+
+          </div>
+
+          <div
+            id="sidebarStatus"
+            class="mt-2 text-xs text-slate-500"
+          >
+            Checking...
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </aside>
+
+
+  <!-- =========================================================
+       MOBILE NAV
+  ========================================================== -->
+
+  <div class="mobile-nav glass sticky top-0 z-50 items-center justify-between px-4 py-3">
+
+    <div>
+      <div class="font-bold text-white">
+        WebDeployKita
+      </div>
+
+      <div class="mono text-[9px] uppercase tracking-[.15em] text-slate-500">
+        Control Center
+      </div>
+    </div>
+
+    <a
+      href="index200.html"
+      class="rounded-lg border border-slate-700 px-3 py-2 text-xs text-slate-300"
+    >
+      Deploy
+    </a>
+
+  </div>
+
+
+  <!-- =========================================================
+       MAIN
+  ========================================================== -->
+
+  <main class="main-content ml-64 min-h-screen">
+
+    <div class="mx-auto max-w-7xl px-6 py-8 lg:px-8">
+
+
+      <!-- =====================================================
+           HEADER
+      ====================================================== -->
+
+      <div class="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+
+        <div>
+
+          <div class="mono mb-2 text-xs uppercase tracking-[.2em] text-blue-400">
+            WebDeployKita / Control Center
+          </div>
+
+          <h1 class="text-3xl font-extrabold tracking-tight text-white md:text-4xl">
+            Main Control Center
+          </h1>
+
+          <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-400">
+            Manage your projects, deployments, domains, and WebDeployKita system
+            from one centralized control center.
+          </p>
+
+        </div>
+
+
+        <div
+          class="inline-flex w-fit items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-3 py-2"
+        >
+
+          <span
+            id="topStatusDot"
+            class="status-dot bg-slate-500"
+          ></span>
+
+          <span
+            id="topStatus"
+            class="mono text-[10px] uppercase tracking-wider text-slate-400"
+          >
+            SYSTEM CHECKING
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- =====================================================
+           HERO
+      ====================================================== -->
+
+      <section class="glass mb-6 overflow-hidden rounded-2xl">
+
+        <div class="relative p-6 md:p-8">
+
+          <div
+            class="absolute -right-20 -top-24 h-72 w-72 rounded-full bg-blue-600/10 blur-3xl"
+          ></div>
+
+          <div
+            class="absolute -bottom-24 left-1/3 h-72 w-72 rounded-full bg-purple-600/10 blur-3xl"
+          ></div>
+
+
+          <div class="relative">
+
+            <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+
+              <div class="max-w-2xl">
+
+                <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/5 px-3 py-1.5">
+
+                  <span class="status-dot bg-blue-400"></span>
+
+                  <span class="mono text-[10px] uppercase tracking-[.16em] text-blue-400">
+                    Deployment Infrastructure
+                  </span>
+
+                </div>
+
+                <h2 class="text-2xl font-extrabold tracking-tight text-white md:text-3xl">
+                  Everything you need to deploy.
+                </h2>
+
+                <p class="mt-3 text-sm leading-6 text-slate-400">
+                  WebDeployKita connects your projects to the deployment
+                  infrastructure while keeping sensitive credentials protected
+                  on the server.
+                </p>
+
+              </div>
+
+
+              <a
+                href="index200.html"
+                class="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-blue-900/20"
+              >
+
+                <svg
+                  class="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 16V4m0 0-4 4m4-4 4 4M5 12v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"
+                  />
+                </svg>
+
+                New Deployment
+
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           STATS
+      ====================================================== -->
+
+      <section class="mb-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+
+
+        <div class="glass rounded-2xl p-5">
+
+          <div class="flex items-start justify-between">
+
+            <div>
+
+              <div class="mono text-[10px] uppercase tracking-wider text-slate-500">
+                Total Projects
+              </div>
+
+              <div
+                id="totalProjects"
+                class="mt-3 text-3xl font-extrabold text-white"
+              >
+                0
+              </div>
+
+            </div>
+
+            <div class="rounded-xl bg-blue-500/10 p-3">
+
+              <svg
+                class="h-5 w-5 text-blue-400"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4 7h16M4 12h16M4 17h16"
+                />
+              </svg>
+
+            </div>
+
+          </div>
+
+          <div class="mt-3 text-xs text-slate-600">
+            Projects registered
+          </div>
+
+        </div>
+
+
+        <div class="glass rounded-2xl p-5">
+
+          <div class="flex items-start justify-between">
+
+            <div>
+
+              <div class="mono text-[10px] uppercase tracking-wider text-slate-500">
+                Successful Deploys
+              </div>
+
+              <div
+                id="successfulDeploys"
+                class="mt-3 text-3xl font-extrabold text-white"
+              >
+                0
+              </div>
+
+            </div>
+
+            <div class="rounded-xl bg-emerald-500/10 p-3">
+
+              <svg
+                class="h-5 w-5 text-emerald-400"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m5 12 4 4L19 6"
+                />
+              </svg>
+
+            </div>
+
+          </div>
+
+          <div class="mt-3 text-xs text-slate-600">
+            Deployment history
+          </div>
+
+        </div>
+
+
+        <div class="glass rounded-2xl p-5">
+
+          <div class="flex items-start justify-between">
+
+            <div>
+
+              <div class="mono text-[10px] uppercase tracking-wider text-slate-500">
+                Active Domains
+              </div>
+
+              <div
+                id="activeDomains"
+                class="mt-3 text-3xl font-extrabold text-white"
+              >
+                0
+              </div>
+
+            </div>
+
+            <div class="rounded-xl bg-purple-500/10 p-3">
+
+              <svg
+                class="h-5 w-5 text-purple-400"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 10h18M5 6h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"
+                />
+              </svg>
+
+            </div>
+
+          </div>
+
+          <div class="mt-3 text-xs text-slate-600">
+            Connected domains
+          </div>
+
+        </div>
+
+
+        <div class="glass rounded-2xl p-5">
+
+          <div class="flex items-start justify-between">
+
+            <div>
+
+              <div class="mono text-[10px] uppercase tracking-wider text-slate-500">
+                Avg Build Time
+              </div>
+
+              <div
+                id="avgBuildTime"
+                class="mt-3 text-3xl font-extrabold text-white"
+              >
+                42s
+              </div>
+
+            </div>
+
+            <div class="rounded-xl bg-cyan-500/10 p-3">
+
+              <svg
+                class="h-5 w-5 text-cyan-400"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="8"
+                />
+
+                <path
+                  stroke-linecap="round"
+                  d="M12 8v4l2.5 2.5"
+                />
+              </svg>
+
+            </div>
+
+          </div>
+
+          <div class="mt-3 text-xs text-slate-600">
+            Recent deployment average
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           MAIN GRID
+      ====================================================== -->
+
+      <section class="grid gap-6 xl:grid-cols-3">
+
+
+        <!-- ===================================================
+             RECENT PROJECTS
+        ==================================================== -->
+
+        <div class="glass rounded-2xl p-6 xl:col-span-2">
+
+          <div class="mb-5 flex items-center justify-between">
+
+            <div>
+
+              <div class="mono text-[10px] uppercase tracking-[.18em] text-slate-500">
+                Workspace
+              </div>
+
+              <h2 class="mt-1 text-lg font-bold text-white">
+                Recent Projects
+              </h2>
+
+            </div>
+
+            <a
+              href="index300.html"
+              class="text-xs font-semibold text-blue-400 hover:text-blue-300"
+            >
+              View all
+            </a>
+
+          </div>
+
+
+          <div
+            id="projectsList"
+            class="space-y-3"
+          ></div>
+
+        </div>
+
+
+        <!-- ===================================================
+             QUICK ACTIONS
+        ==================================================== -->
+
+        <div class="glass rounded-2xl p-6">
+
+          <div class="mb-5">
+
+            <div class="mono text-[10px] uppercase tracking-[.18em] text-slate-500">
+              Actions
+            </div>
+
+            <h2 class="mt-1 text-lg font-bold text-white">
+              Quick Actions
+            </h2>
+
+          </div>
+
+
+          <div class="grid gap-3">
+
+
+            <a
+              href="index300.html"
+              class="action-card glass-soft rounded-xl p-4"
+            >
+
+              <div class="flex items-center gap-3">
+
+                <div class="rounded-lg bg-blue-500/10 p-2.5">
+
+                  <svg
+                    class="h-4 w-4 text-blue-400"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 5v14M5 12h14"
+                    />
+                  </svg>
+
+                </div>
+
+                <div>
+                  <div class="text-sm font-semibold text-white">
+                    New Project
+                  </div>
+
+                  <div class="mt-0.5 text-[11px] text-slate-600">
+                    Add a project
+                  </div>
+                </div>
+
+              </div>
+
+            </a>
+
+
+            <a
+              href="index200.html"
+              class="action-card glass-soft rounded-xl p-4"
+            >
+
+              <div class="flex items-center gap-3">
+
+                <div class="rounded-lg bg-emerald-500/10 p-2.5">
+
+                  <svg
+                    class="h-4 w-4 text-emerald-400"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M12 16V4m0 0-4 4m4-4 4 4M5 12v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"
+                    />
+                  </svg>
+
+                </div>
+
+                <div>
+                  <div class="text-sm font-semibold text-white">
+                    Quick Deploy
+                  </div>
+
+                  <div class="mt-0.5 text-[11px] text-slate-600">
+                    Deploy a repository
+                  </div>
+                </div>
+
+              </div>
+
+            </a>
+
+
+            <a
+              href="index400.html"
+              class="action-card glass-soft rounded-xl p-4"
+            >
+
+              <div class="flex items-center gap-3">
+
+                <div class="rounded-lg bg-purple-500/10 p-2.5">
+
+                  <svg
+                    class="h-4 w-4 text-purple-400"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M3 10h18M5 6h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"
+                    />
+                  </svg>
+
+                </div>
+
+                <div>
+                  <div class="text-sm font-semibold text-white">
+                    Add Domain
+                  </div>
+
+                  <div class="mt-0.5 text-[11px] text-slate-600">
+                    Configure hosting
+                  </div>
+                </div>
+
+              </div>
+
+            </a>
+
+
+            <a
+              href="index300.html"
+              class="action-card glass-soft rounded-xl p-4"
+            >
+
+              <div class="flex items-center gap-3">
+
+                <div class="rounded-lg bg-cyan-500/10 p-2.5">
+
+                  <svg
+                    class="h-4 w-4 text-cyan-400"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M4 6h16M4 12h16M4 18h16"
+                    />
+                  </svg>
+
+                </div>
+
+                <div>
+                  <div class="text-sm font-semibold text-white">
+                    Deployment History
+                  </div>
+
+                  <div class="mt-0.5 text-[11px] text-slate-600">
+                    Manage project deployments
+                  </div>
+                </div>
+
+              </div>
+
+            </a>
+
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           DEPLOYMENT ACTIVITY
+      ====================================================== -->
+
+      <section class="mt-6 glass rounded-2xl p-6">
+
+        <div class="mb-5 flex items-center justify-between">
+
+          <div>
+
+            <div class="mono text-[10px] uppercase tracking-[.18em] text-slate-500">
+              System Activity
+            </div>
+
+            <h2 class="mt-1 text-lg font-bold text-white">
+              Deployment Activity
+            </h2>
+
+          </div>
+
+          <div
+            class="mono text-[10px] uppercase tracking-wider text-slate-600"
+          >
+            Local Activity
+          </div>
+
+        </div>
+
+
+        <div
+          id="activityList"
+          class="space-y-3"
+        ></div>
+
+      </section>
+
+
+      <!-- =====================================================
+           INFRASTRUCTURE
+      ====================================================== -->
+
+      <section class="mt-6 grid gap-6 lg:grid-cols-3">
+
+
+        <div class="glass-soft rounded-2xl p-5">
+
+          <div class="flex items-center gap-3">
+
+            <div class="rounded-xl bg-blue-500/10 p-3">
+
+              <span class="text-sm font-black text-white">
+                ▲
+              </span>
+
+            </div>
+
+            <div>
+
+              <div class="text-sm font-semibold text-white">
+                Vercel
+              </div>
+
+              <div class="mono text-[10px] text-slate-600">
+                Deployment provider
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="mt-4 flex items-center gap-2">
+
+            <span
+              id="vercelDot"
+              class="status-dot bg-slate-500"
+            ></span>
+
+            <span
+              id="vercelStatus"
+              class="text-xs text-slate-500"
+            >
+              Checking gateway...
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="glass-soft rounded-2xl p-5">
+
+          <div class="flex items-center gap-3">
+
+            <div class="rounded-xl bg-emerald-500/10 p-3">
+
+              <svg
+                class="h-5 w-5 text-emerald-400"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 3l7 4v5c0 4.5-2.9 7.9-7 9-4.1-1.1-7-4.5-7-9V7l7-4Z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="m9 12 2 2 4-4"
+                />
+              </svg>
+
+            </div>
+
+            <div>
+
+              <div class="text-sm font-semibold text-white">
+                Server Security
+              </div>
+
+              <div class="mono text-[10px] text-slate-600">
+                Credential protection
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="mt-4 text-xs text-emerald-400">
+            Vercel token server-side
+          </div>
+
+        </div>
+
+
+        <div class="glass-soft rounded-2xl p-5">
+
+          <div class="flex items-center gap-3">
+
+            <div class="rounded-xl bg-purple-500/10 p-3">
+
+              <svg
+                class="h-5 w-5 text-purple-400"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 8v4l3 2"
+                />
+
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="8"
+                />
+              </svg>
+
+            </div>
+
+            <div>
+
+              <div class="text-sm font-semibold text-white">
+                Platform
+              </div>
+
+              <div class="mono text-[10px] text-slate-600">
+                WebDeployKita
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="mt-4 text-xs text-slate-400">
+            Production environment
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           FOOTER
+      ====================================================== -->
+
+      <footer class="mt-10 border-t border-slate-900 pt-6">
+
+        <div class="flex flex-col gap-3 text-xs text-slate-600 md:flex-row md:items-center md:justify-between">
+
+          <div>
+            WebDeployKita · Main Control Center
+          </div>
+
+          <div class="mono">
+            SYSTEM · PRODUCTION
+          </div>
+
+        </div>
+
+      </footer>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================================================
+       JAVASCRIPT
+  ========================================================== -->
+
+  <script>
+
+    // ========================================================
+    // CONFIG
+    // ========================================================
+
+    const API_ENDPOINT = "/apideploy";
+
+    const PROJECT_STORAGE_KEY =
+      "webdeploykita.projects";
+
+    const ACTIVITY_STORAGE_KEY =
+      "webdeploykita.activity";
+
+    const DOMAINS_STORAGE_KEY =
+      "webdeploykita.domains";
+
+
+    // ========================================================
+    // DEFAULT PROJECTS
+    // ========================================================
+
+    const defaultProjects = [
+
+      {
+        name: "WebToolsKita",
+        repo: "github.com/webtoolskita/webtoolskita",
+        branch: "main",
+        status: "Active",
+        updated: "Recently"
+      },
+
+      {
+        name: "Agency Portal",
+        repo: "github.com/webtoolskita/agency-portal",
+        branch: "main",
+        status: "Active",
+        updated: "Recently"
+      },
+
+      {
+        name: "Nexa Landing",
+        repo: "github.com/webtoolskita/nexa-landing",
+        branch: "main",
+        status: "Active",
+        updated: "Recently"
+      },
+
+      {
+        name: "Storefront",
+        repo: "github.com/webtoolskita/storefront",
+        branch: "main",
+        status: "Pending",
+        updated: "Recently"
+      }
+
+    ];
+
+
+    // ========================================================
+    // ELEMENTS
+    // ========================================================
+
+    const projectsList =
+      document.getElementById("projectsList");
+
+    const activityList =
+      document.getElementById("activityList");
+
+
+    // ========================================================
+    // SAFE HTML
+    // ========================================================
+
+    function escapeHtml(value) {
+
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+
+    // ========================================================
+    // PROJECT STORAGE
+    // ========================================================
+
+    function getProjects() {
+
+      try {
+
+        const saved =
+          localStorage.getItem(
+            PROJECT_STORAGE_KEY
+          );
+
+        if (!saved) {
+
+          localStorage.setItem(
+            PROJECT_STORAGE_KEY,
+            JSON.stringify(
+              defaultProjects
+            )
+          );
+
+          return [
+            ...defaultProjects
+          ];
+
+        }
+
+
+        const parsed =
+          JSON.parse(saved);
+
+
+        if (
+          !Array.isArray(parsed)
+        ) {
+
+          return [
+            ...defaultProjects
+          ];
+
+        }
+
+
+        return parsed;
+
+      } catch {
+
+        return [
+          ...defaultProjects
+        ];
+
+      }
+
+    }
+
+
+    // ========================================================
+    // ACTIVITY STORAGE
+    // ========================================================
+
+    function getActivity() {
+
+      try {
+
+        const saved =
+          localStorage.getItem(
+            ACTIVITY_STORAGE_KEY
+          );
+
+        if (!saved) {
+
+          return [];
+
+        }
+
+        const parsed =
+          JSON.parse(saved);
+
+        return Array.isArray(parsed)
+          ? parsed
+          : [];
+
+      } catch {
+
+        return [];
+
+      }
+
+    }
+
+
+    // ========================================================
+    // DOMAINS STORAGE
+    // ========================================================
+
+    function getDomains() {
+
+      try {
+
+        const saved =
+          localStorage.getItem(
+            DOMAINS_STORAGE_KEY
+          );
+
+        if (!saved) {
+
+          return [
+
+            {
+              domain: "webtoolskita.com",
+              project: "WebToolsKita",
+              status: "active"
+            },
+
+            {
+              domain: "agency.webtoolskita.com",
+              project: "Agency Portal",
+              status: "active"
+            },
+
+            {
+              domain: "nexa-landing.com",
+              project: "Nexa Landing",
+              status: "active"
+            },
+
+            {
+              domain: "storefront.example",
+              project: "Storefront",
+              status: "pending"
+            }
+
+          ];
+
+        }
+
+
+        const parsed =
+          JSON.parse(saved);
+
+
+        return Array.isArray(parsed)
+          ? parsed
+          : [];
+
+      } catch {
+
+        return [];
+
+      }
+
+    }
+
+
+    // ========================================================
+    // RENDER PROJECTS
+    // ========================================================
+
+    function renderProjects() {
+
+      const projects =
+        getProjects();
+
+
+      if (!projects.length) {
+
+        projectsList.innerHTML = `
+
+          <div class="rounded-xl border border-dashed border-slate-800 p-8 text-center">
+
+            <div class="text-sm font-semibold text-slate-400">
+              No projects yet
+            </div>
+
+            <div class="mt-1 text-xs text-slate-600">
+              Create your first project in Project Manager.
+            </div>
+
+            <a
+              href="index300.html"
+              class="mt-4 inline-block text-xs font-semibold text-blue-400 hover:text-blue-300"
+            >
+              Open Project Manager →
+            </a>
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+      projectsList.innerHTML =
+        projects
+          .slice(0, 5)
+          .map(
+            (project, index) => {
+
+              const active =
+                String(
+                  project.status || "Active"
+                ).toLowerCase() ===
+                "active";
+
+
+              return `
+
+                <div class="project-card rounded-xl border border-slate-800/80 bg-slate-950/35 p-4">
+
+                  <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
+                    <div class="flex min-w-0 items-center gap-3">
+
+                      <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-800">
+
+                        <span class="mono text-xs font-bold text-blue-400">
+                          ${String(index + 1).padStart(2, "0")}
+                        </span>
+
+                      </div>
+
+                      <div class="min-w-0">
+
+                        <div class="truncate text-sm font-semibold text-white">
+                          ${escapeHtml(project.name || "Unnamed Project")}
+                        </div>
+
+                        <div class="mt-1 truncate mono text-[10px] text-slate-600">
+                          ${escapeHtml(project.repo || "Repository not configured")}
+                        </div>
+
+                      </div>
+
+                    </div>
+
+
+                    <div class="flex items-center gap-4">
+
+                      <div class="hidden text-right sm:block">
+
+                        <div class="mono text-[9px] uppercase tracking-wider text-slate-600">
+                          Branch
+                        </div>
+
+                        <div class="mt-1 mono text-[10px] text-slate-400">
+                          ${escapeHtml(project.branch || "main")}
+                        </div>
+
+                      </div>
+
+
+                      <div
+                        class="rounded-full border px-2.5 py-1 ${
+                          active
+                            ? "border-emerald-500/20 bg-emerald-500/5 text-emerald-400"
+                            : "border-amber-500/20 bg-amber-500/5 text-amber-400"
+                        }"
+                      >
+
+                        <span class="mono text-[9px] font-semibold uppercase tracking-wider">
+                          ${escapeHtml(project.status || "Pending")}
+                        </span>
+
+                      </div>
+
+
+                      <a
+                        href="index200.html?project=${encodeURIComponent(project.name || "")}&repo=${encodeURIComponent(project.repo || "")}&branch=${encodeURIComponent(project.branch || "main")}"
+                        class="rounded-lg border border-slate-800 px-3 py-2 text-[10px] font-semibold text-slate-400 transition hover:border-blue-500/30 hover:text-blue-400"
+                      >
+                        Deploy
+                      </a>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              `;
+
+            }
+          )
+          .join("");
+
+    }
+
+
+    // ========================================================
+    // RENDER ACTIVITY
+    // ========================================================
+
+    function renderActivity() {
+
+      const activity =
+        getActivity();
+
+
+      if (!activity.length) {
+
+        activityList.innerHTML = `
+
+          <div class="rounded-xl border border-dashed border-slate-800 p-6 text-center">
+
+            <div class="text-sm font-semibold text-slate-500">
+              No deployment activity yet
+            </div>
+
+            <div class="mt-1 text-xs text-slate-700">
+              Your deployment events will appear here.
+            </div>
+
+          </div>
+
+        `;
+
+        return;
+
+      }
+
+
+      activityList.innerHTML =
+        activity
+          .slice(0, 8)
+          .map(
+            item => {
+
+              const success =
+                String(
+                  item.status || ""
+                ).toLowerCase() ===
+                "success";
+
+
+              return `
+
+                <div class="flex items-center gap-4 rounded-xl border border-slate-800/70 bg-slate-950/30 p-4">
+
+                  <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${
+                    success
+                      ? "bg-emerald-500/10"
+                      : "bg-blue-500/10"
+                  }">
+
+                    <span
+                      class="status-dot ${
+                        success
+                          ? "bg-emerald-400"
+                          : "bg-blue-400"
+                      }"
+                    ></span>
+
+                  </div>
+
+
+                  <div class="min-w-0 flex-1">
+
+                    <div class="truncate text-sm font-semibold text-slate-300">
+                      ${escapeHtml(item.message || "Deployment event")}
+                    </div>
+
+                    <div class="mt-1 mono text-[10px] text-slate-700">
+                      ${escapeHtml(item.time || "Recently")}
+                    </div>
+
+                  </div>
+
+
+                  <div class="mono text-[10px] uppercase tracking-wider ${
+                    success
+                      ? "text-emerald-500"
+                      : "text-blue-500"
+                  }">
+                    ${escapeHtml(item.status || "INFO")}
+                  </div>
+
+                </div>
+
+              `;
+
+            }
+          )
+          .join("");
+
+    }
+
+
+    // ========================================================
+    // STATS
+    // ========================================================
+
+    function renderStats() {
+
+      const projects =
+        getProjects();
+
+      const domains =
+        getDomains();
+
+      const activity =
+        getActivity();
+
+
+      document.getElementById(
+        "totalProjects"
+      ).textContent =
+        projects.length;
+
+
+      const successful =
+        activity.filter(
+          item =>
+            String(
+              item.status || ""
+            ).toLowerCase() ===
+            "success"
+        ).length;
+
+
+      /*
+       * Keep the original platform metric when
+       * no local deployment history exists.
+       */
+
+      document.getElementById(
+        "successfulDeploys"
+      ).textContent =
+        successful ||
+        48;
+
+
+      const activeDomains =
+        domains.filter(
+          item =>
+            String(
+              item.status || ""
+            ).toLowerCase() ===
+            "active"
+        ).length;
+
+
+      document.getElementById(
+        "activeDomains"
+      ).textContent =
+        activeDomains;
+
+
+      document.getElementById(
+        "avgBuildTime"
+      ).textContent =
+        "42s";
+
+    }
+
+
+    // ========================================================
+    // API STATUS
+    // ========================================================
+
+    async function checkApiStatus() {
+
+      const topStatus =
+        document.getElementById(
+          "topStatus"
+        );
+
+      const topStatusDot =
+        document.getElementById(
+          "topStatusDot"
+        );
+
+      const sidebarStatus =
+        document.getElementById(
+          "sidebarStatus"
+        );
+
+      const sidebarStatusDot =
+        document.getElementById(
+          "sidebarStatusDot"
+        );
+
+      const vercelStatus =
+        document.getElementById(
+          "vercelStatus"
+        );
+
+      const vercelDot =
+        document.getElementById(
+          "vercelDot"
+        );
+
+
+      try {
+
+        const response =
+          await fetch(
+            API_ENDPOINT,
+            {
+              method: "GET",
+              headers: {
+                Accept:
+                  "application/json"
+              },
+              cache: "no-store"
+            }
+          );
+
+
+        let data = {};
+
+        try {
+
+          data =
+            await response.json();
+
+        } catch {
+
+          data = {};
+
+        }
+
+
+        if (
+          response.ok &&
+          data.ok === true &&
+          data.configured === true
+        ) {
+
+          topStatus.textContent =
+            "SYSTEM ONLINE";
+
+          topStatus.className =
+            "mono text-[10px] uppercase tracking-wider text-emerald-400";
+
+          topStatusDot.className =
+            "status-dot bg-emerald-400";
+
+
+          sidebarStatus.textContent =
+            "Online · Vercel ready";
+
+          sidebarStatus.className =
+            "mt-2 text-xs text-emerald-400";
+
+          sidebarStatusDot.className =
+            "status-dot bg-emerald-400";
+
+
+          vercelStatus.textContent =
+            "Gateway online · ready";
+
+          vercelStatus.className =
+            "text-xs text-emerald-400";
+
+          vercelDot.className =
+            "status-dot bg-emerald-400";
+
+
+          return;
+
+        }
+
+
+        if (
+          response.ok &&
+          data.ok === true &&
+          data.configured === false
+        ) {
+
+          topStatus.textContent =
+            "TOKEN REQUIRED";
+
+          topStatus.className =
+            "mono text-[10px] uppercase tracking-wider text-amber-400";
+
+          topStatusDot.className =
+            "status-dot bg-amber-400";
+
+
+          sidebarStatus.textContent =
+            "Online · token missing";
+
+          sidebarStatus.className =
+            "mt-2 text-xs text-amber-400";
+
+          sidebarStatusDot.className =
+            "status-dot bg-amber-400";
+
+
+          vercelStatus.textContent =
+            "Gateway online · token required";
+
+          vercelStatus.className =
+            "text-xs text-amber-400";
+
+          vercelDot.className =
+            "status-dot bg-amber-400";
+
+
+          return;
+
+        }
+
+
+        throw new Error(
+          data?.error ||
+          "API unavailable"
+        );
+
+
+      } catch {
+
+        topStatus.textContent =
+          "SYSTEM OFFLINE";
+
+        topStatus.className =
+          "mono text-[10px] uppercase tracking-wider text-red-400";
+
+        topStatusDot.className =
+          "status-dot bg-red-400";
+
+
+        sidebarStatus.textContent =
+          "Offline";
+
+        sidebarStatus.className =
+          "mt-2 text-xs text-red-400";
+
+        sidebarStatusDot.className =
+          "status-dot bg-red-400";
+
+
+        vercelStatus.textContent =
+          "Gateway unavailable";
+
+        vercelStatus.className =
+          "text-xs text-red-400";
+
+        vercelDot.className =
+          "status-dot bg-red-400";
+
+      }
+
+    }
+
+
+    // ========================================================
+    // INITIALIZE
+    // ========================================================
+
+    renderProjects();
+
+    renderActivity();
+
+    renderStats();
+
+    checkApiStatus();
+
+  </script>
+
+</body>
+</html>
